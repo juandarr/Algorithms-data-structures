@@ -10,3 +10,5 @@ Here is an example of the game during execution. It will ask you for input until
 the word or you have failed an enough number of times.
 
 <img src="live.png" width="60%" height="60%" alt="Hangman the game live">
+
+JuanD
