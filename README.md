@@ -1,14 +1,13 @@
-# hangman
-Simple hangman game created in Python. The game entirely runs in the command line and asks for inputs via its user interface. 
+# Algorithms and data structures
 
-The code was written entirely in python. A collection of words is stores in the wordsHangman.txt file
-and the main program pulls data from it to create the game stage. Here is an example of the source code:
+This repository shows the exploration of algorithms and data structures in Python 3. My goal is to create a 
+summary with my major findings and implementations.
 
-<img src="code.png" width="60%" height="60%" alt="Source code hangman the game">
 
-Here is an example of the game during execution. It will ask you for input until you are able to guess
-the word or you have failed an enough number of times.
+## Sorting algorithms
 
-<img src="live.png" width="60%" height="60%" alt="Hangman the game live">
+## Misc
 
-JuanD
+### Hangman
+
+### Card deck 
