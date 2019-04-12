@@ -30,5 +30,25 @@ class MyArray():
                     step += 1
                     print('step {}: swap!'.format(step))
             range_unsorted -= 1
-        pass
+    
+    def selection_sort(self):
+        starting_index = 0
+        step = 0
+        while starting_index<len(self.arr)-1:
+            min_value_index = starting_index
+            for i in range(starting_index+1, len(self.arr)):
+                step += 1
+                print('step {}'.format(step))
+                if (self.arr[i] < self.arr[min_value_index]):
+                    min_value_index = i
+            if (starting_index!=min_value_index):
+                step += 1
+                print('step {}. Value swap.'.format(step))
+                tmp = self.arr[starting_index]
+                self.arr[starting_index] = self.arr[min_value_index]
+                self.arr[min_value_index] = tmp
+            starting_index += 1
+
+                
+
 
