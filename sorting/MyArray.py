@@ -49,6 +49,27 @@ class MyArray():
                 self.arr[min_value_index] = tmp
             starting_index += 1
 
+    def insertion_sort(self):
+        starting_index = 1
+        step = 0
+        while starting_index <= len(self.arr)-1:
+            temp_val = self.arr[starting_index]
+            gap_index = starting_index
+            for i in range(starting_index-1,-1,-1):
+                step += 1
+                print('step {}'.format(step))
+                if self.arr[i]>=temp_val:
+                    step += 1
+                    print('step {}. Insert to right.'.format(step))
+                    self.arr[i+1]= self.arr[i]
+                    gap_index = i
+                if (i==0 or self.arr[i]< temp_val):
+                    step += 1
+                    print('step {}. Final insert.'.format(step))
+                    self.arr[gap_index] = temp_val
+                    break
+            starting_index += 1
+
                 
 
 
