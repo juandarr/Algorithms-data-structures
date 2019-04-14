@@ -107,3 +107,24 @@ As there are an even number of data points in the original ordered data set, we 
     Upper half: 39, 40, 41
 ```
 The median of the lower half is `15`, so the value of the first quartile is `15`, and the median of the upper half is `40`, so the value of the third quartile is `40`.
+
+### Expected Values
+
+The expected value of a discrete random variable, `X`, is more or less another way of referring to the mean (`mu`). We can also refer to this as the mathematical expectation (or just the expectation) of `X`.
+
+### Variance `sigma^2`
+
+This is the average magnitude of fluctuations of `X` from its expected value, `mu`. You can also think of it as the expectation of a random variable's squared deviation from its mean. Given a data set, `X` , of size `n`:
+```python
+    sigma^2 = sum((x_i-mu)**2 for i from 1 to n)/n
+```
+
+where `x_i` is the `i_th` element of the data set and is the mean of all the elements.
+
+### Standard Deviation `sigma`
+
+The standard deviation quantifies the amount of variation in a set of data values. Given a data set, `X`, of size `n`:
+```python
+    sigma = sqrt ( sum( (x_i-mu)**2 for i from 1 to n )/n )
+```
+where `x_i` is the `i_th` element of the data set and `mu` is the mean of all the elements. 
