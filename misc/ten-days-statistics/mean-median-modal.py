@@ -34,7 +34,7 @@ def statisticsValues(arr, n):
     
     # Median calculation
     if n%2==0:
-        median = (frequency_list[n//2-1][0]+frequency_list[n//2][0])/2
+        median = (frequency_list[int(n//2-1)][0]+frequency_list[int(n//2)][0])/2
     else:
         median = frequency_list[n//2][0]
     return mean, median, modal
