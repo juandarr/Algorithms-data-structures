@@ -56,3 +56,54 @@ print ("{0:.2f}".format(a))
 print ("The value of number till 2 decimal place(using round()) is : ",end="") 
 print (round(a,2)) 
 ```
+
+## Day 1: Quartiles
+
+### Quartile
+
+The quartiles of an ordered data set are the `3` points that split the data set into `4` equal groups. The `3` quartiles are defined as follows:
+
+    1. `Q_1` The first quartile is the middle number between the smallest number in a data set an its median.
+    2. `Q_2` The second quartile is the median (`50_th` percentile) of the data set.
+
+    3. `Q_3` The third quartile is the middle number between a data set's median and its largest number.
+
+#### Computing the First and Third Quartile
+
+We will use the first method described in the Wikipedia:
+
+We will split the data into two halves, lower half and upper half:
+
+    - If there are an odd number of data points in the original ordered data set, do not include the median (the central value in the ordered list) in either half.
+
+    - If there are an even number of data points in the original ordered data set, split this data set exactly in half.
+
+The value of the first quartile (`Q_1`) is the median of the lower half and the value of the third quartile (`Q_3`) is the median of the upper half.
+
+#### Example 1
+
+We will consider the following ordered dataset for this example:
+```python
+    6, 7, 15, 36, 39, 40, 41, 42, 43, 47, 49
+```
+The median of the dataset is `40`. As there are an odd number of data points, we do not include the median (the central value in the ordered list) in either half:
+```python
+    Lower half: 6, 7, 15, 36, 39
+
+    Upper half: 41, 42, 43, 47, 49
+```
+The median of the lower half is `15`, so the value of the first quartile is `15`, and the median of the upper half is `43`, so the value of the third quartile is `43`.
+
+#### Example 2
+
+We will consider the following ordered dataset for this example:
+```python
+    7, 15, 36, 39, 40, 41
+```
+As there are an even number of data points in the original ordered data set, we will split this data set exactly in half:
+```python
+    Lower half: 7, 15, 36
+
+    Upper half: 39, 40, 41
+```
+The median of the lower half is `15`, so the value of the first quartile is `15`, and the median of the upper half is `40`, so the value of the third quartile is `40`.
