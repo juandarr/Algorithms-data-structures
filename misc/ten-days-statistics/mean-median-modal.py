@@ -1,3 +1,4 @@
+# Enter your code here. Read input from STDIN. Print output to STDOUT
 #!/bin/python3
 
 import math
@@ -6,8 +7,8 @@ import random
 import re
 import sys
 
-def sortFirst(arr):
-    return arr[0]
+def sortSecond(arr):
+    return arr[1]
 
 # Complete the maximumToys function below.
 def statisticsValues(arr, n):
@@ -25,18 +26,22 @@ def statisticsValues(arr, n):
 
     # Modal calculation
     frequency_list = list(zip(value_frequency.keys(), value_frequency.values()))
-    frequency_list.sort(key=sortFirst)
-    frequency = 0
-    for k in frequency_list:
-        if k[1] > frequency:
-            modal = k[0]
-            frequency = k[1]
+    frequency_list.sort(key=sortSecond, reverse=True)
+    modal = frequency_list[0][0]
+    frequency = frequency_list[0][1]
+    for k in frequency_list[1:]:
+        if k[1] == frequency:
+            if k[0]< modal:
+                modal = k[0]
+        else:
+            break
     
     # Median calculation
+    arr.sort()
     if n%2==0:
-        median = (frequency_list[int(n//2-1)][0]+frequency_list[int(n//2)][0])/2
+        median = (arr[int(n//2)-1]+arr[int(n//2)])/2
     else:
-        median = frequency_list[n//2][0]
+        median = arr[n//2][0]
     return mean, median, modal
 
 if __name__ == '__main__':
@@ -50,6 +55,6 @@ if __name__ == '__main__':
     arr = list(map(int, input().rstrip().split()))
     mean, median, modal = statisticsValues(arr, n)
 
-    fptr.write('{0:.1f}\n{1:.1f}\n{2}\n'.format(mean,median, modal))
+    fptr.write('{0:.1f}\n{1:.1f}\n{2}'.format(mean,median, modal))
 
     fptr.close()
