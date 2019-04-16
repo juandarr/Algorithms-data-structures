@@ -163,3 +163,17 @@ If we refer back to the basic formula for the probability of the occurrence of a
 
     P(A) = |A|/|S| = 3/6 = 1/2
 ```
+
+## Compound Events, Mutually Exclusive Events, and Collectively Exhaustive Events
+
+Let's consider `2` events: `A` and `B`. A compound event is a combination of `2` or more simple events. If `A` and `B` are simple events, then `A u B` denotes the occurrence of either `A` or `B`. Similarly, `A n B` denotes the occurrence of `A` and `B` together.
+
+`A` and `B` are said to be mutually exclusive or disjoint if they have no events in common (i.e., `A n B = O` and `P(A n B) = 0`). The probability of any of `2` or more events occurring is the union (`u`) of events. Because disjoint probabilities have no common events, the probability of the union of disjoint events is the sum of the events' individual probabilities. `A` and `B` are said to be collectively exhaustive if their union covers all events in the sample space (i.e.,`A u B = S` and `P (A u B) = 1`). This brings us to our next fundamental rule of probability: if `2` events, `A` and `B`, are disjoint, then the probability of either event is the sum of the probabilities of the `2` events (i.e.,`P (A or B) = P(A) + P(B)`).
+
+If the outcome of the first event (`A`) has no impact on the second event (`B`), then they are considered to be independent (e.g., tossing a fair coin). This brings us to the next fundamental rule of probability: the multiplication rule. It states that if two events,`A` and `B`, are independent, then the probability of both events is the product of the probabilities for each event (i.e., `P(A and B) = P(A)*P(B)`). The chance of all events occurring in a sequence of events is called the intersection (`n`) of those events.
+
+### Example 1
+![Head and tail](images/probabilities1.png)
+
+### Example 2
+![Probability intersection](images/probabilities2.png)
