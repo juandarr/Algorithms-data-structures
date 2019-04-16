@@ -177,3 +177,18 @@ If the outcome of the first event (`A`) has no impact on the second event (`B`),
 
 ### Example 2
 ![Probability intersection](images/probabilities2.png)
+
+
+## Day 3
+
+### Conditional Probability
+
+This is defined as the probability of an event occurring, assuming that one or more other events have already occurred. Two events, `A` and `B` are considered to be independent if event `A` has no effect on the probability of event (i.e. `P(B|A) = P(B)`). If events `A` and `B` are not independent, then we must consider the probability that both events occur. This can be referred to as the intersection of events `A` and `B`, defined as `P (A n B) = P( B | A) * P (A)`. We can then use this definition to find the conditional probability by dividing the probability of the intersection of the two events (`A n B`) by the probability of the event that is assumed to have already occurred (event `A`):
+```python
+P (B | A) = P (A n B)/ P(A)
+```
+
+#### Example 1
+
+![Conditional probability](images/conditional-prob.png)
+
