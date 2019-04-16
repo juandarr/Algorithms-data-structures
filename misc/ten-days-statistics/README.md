@@ -128,3 +128,38 @@ The standard deviation quantifies the amount of variation in a set of data value
     sigma = sqrt ( sum( (x_i-mu)**2 for i from 1 to n )/n )
 ```
 where `x_i` is the `i_th` element of the data set and `mu` is the mean of all the elements. 
+
+## Day 3: The basics of probabilities
+
+### Event, Sample Space, and Probability
+
+In probability theory, an experiment is any procedure that can be infinitely repeated and has a well-defined set of possible outcomes, known as the sample space, `S`. We define an event to be a set of outcomes of an experiment (also known as a subset of `S`) to which a probability (numerical value) is assigned.
+
+The probability of the occurrence of an event, `A`, is:
+```python
+    P(A) = number_of_favorable_outcomes / total_number_of_outcomes
+```
+
+Here are the first two fundamental rules of probability:
+
+    1. Any probability, `P(A)`, is a number between `0` and `1` (i.e.,`0 <= P(A) <= 1`).
+    2. The probability of the sample space, `S`, is `1` (i.e.,`P(S) = 1`).
+
+So how do we bridge the gap between the value of `P(A)`and the sample space? Quite simply, since we know that `P(A)` is the probability that event `A` will occur, then we define `P(A')`(also written as `P(A_c)`) to be the probability that event `A` will not occur (the complement of `P(A)`). If our sample space is composed of the probabilities of `A`'s occurrence and non-occurrence, we can then say `P(A) + P(A') = 1`, or the sum of all possible outcomes of `A` in the sample space is equal to `1`. This is the third fundamental rule of probability: `P(A') = 1 - P(A)`.
+
+#### Example 1
+
+Find the probability of getting an odd number when rolling a `6`-sided fair die.
+
+Given the above question, we can extract the following:
+
+    - Experiment: rolling a `6`-sided die.
+    - Sample space (`S`): `S = {1,2,3,4,5,6}`.
+    - Event (`A`): that the number rolled is odd (i.e., `A = {1,3,5}`).
+
+If we refer back to the basic formula for the probability of the occurrence of an event, we can say: 
+```python
+    P(A) = number_of_favorable_outcomes / total_number_of_outcomes
+
+    P(A) = |A|/|S| = 3/6 = 1/2
+```
