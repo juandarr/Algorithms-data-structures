@@ -202,3 +202,27 @@ P (A | B) = P (B | A) * P (A)/ P(B) = P ( B | A) * P (A) / ( P (B | A)*P(A) +P (
 
 #### Example 2
 ![Bayes rule](images/conditional-prob2.png)
+
+As you may have already noticed, finding patterns in the possible ways events can occur is very useful in helping us count the number of desirable events in our sample space. Two of the easiest methods for doing this are with permutations (when order matters) and combinations (when order doesn't matter). 
+
+### Permuations
+
+An ordered arrangement of `r` objects from a set,`A` , of `n` objects (where `0 < r <= n`) is called an `r`-element permutation of `A`. You can also think of this as a permutation of `A`'s elements taken `r` at a time. The number of `r`-element permutations of an `n`-object set is denoted by the following formula:
+
+```python
+    n_P_r = n! /(n-r)!
+```
+
+**Note**: We define `0!` to be `1`; Otherwise, `n_P_n` would be `n!/0` (when `r = n`).
+
+### Combinations
+
+An unordered arrangement of `r` objects from a set, `A`, of `n` objects (where `r <= n`) is called an `r`-element combination of `A`. You can also think of this as a combination of `A`'s elements taken `r` at a time.
+
+Because the only difference between permutations and combinations is that combinations are unordered, we can easily find the number of `r`-element combinations by dividing out the permutations (`r!`):
+
+```python
+n_C_r = n_P_r / r! = n! (r! *(n-r)!)
+```
+
+When we talk about combinations, we're talking about the number of subsets of size `r` that can be made from a set of size `n`. In fact, `n_C_r` is often referred to as "`n` choose `r`", because it's counting the number of `r`-element combinations that can be chosen from a set of `n` elements. In notation, `n_C_r` is typically written as `(n r)`. 
