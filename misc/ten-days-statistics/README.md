@@ -145,7 +145,7 @@ Here are the first two fundamental rules of probability:
     1. Any probability, `P(A)`, is a number between `0` and `1` (i.e.,`0 <= P(A) <= 1`).
     2. The probability of the sample space, `S`, is `1` (i.e.,`P(S) = 1`).
 
-So how do we bridge the gap between the value of `P(A)`and the sample space? Quite simply, since we know that `P(A)` is the probability that event `A` will occur, then we define `P(A')`(also written as `P(A_c)`) to be the probability that event `A` will not occur (the complement of `P(A)`). If our sample space is composed of the probabilities of `A`'s occurrence and non-occurrence, we can then say `P(A) + P(A') = 1`, or the sum of all possible outcomes of `A` in the sample space is equal to `1`. This is the third fundamental rule of probability: `P(A') = 1 - P(A)`.
+So how do we bridge the gap between the value of `P(A)`and the sample space? Quite simply, since we know that `P(A)` is the probability that event `A` will occur, then we define `P(A_c)`(also written as `P(A')`) to be the probability that event `A` will not occur (the complement of `P(A)`). If our sample space is composed of the probabilities of `A`'s occurrence and non-occurrence, we can then say `P(A) + P(A_c) = 1`, or the sum of all possible outcomes of `A` in the sample space is equal to `1`. This is the third fundamental rule of probability: `P(A_c) = 1 - P(A)`.
 
 #### Example 1
 
@@ -168,7 +168,7 @@ If we refer back to the basic formula for the probability of the occurrence of a
 
 Let's consider `2` events: `A` and `B`. A compound event is a combination of `2` or more simple events. If `A` and `B` are simple events, then `A u B` denotes the occurrence of either `A` or `B`. Similarly, `A n B` denotes the occurrence of `A` and `B` together.
 
-`A` and `B` are said to be mutually exclusive or disjoint if they have no events in common (i.e., `A n B = O` and `P(A n B) = 0`). The probability of any of `2` or more events occurring is the union (`u`) of events. Because disjoint probabilities have no common events, the probability of the union of disjoint events is the sum of the events' individual probabilities. `A` and `B` are said to be collectively exhaustive if their union covers all events in the sample space (i.e.,`A u B = S` and `P (A u B) = 1`). This brings us to our next fundamental rule of probability: if `2` events, `A` and `B`, are disjoint, then the probability of either event is the sum of the probabilities of the `2` events (i.e.,`P (A or B) = P(A) + P(B)`).
+`A` and `B` are said to be mutually exclusive or disjoint if they have no events in common (i.e., `A n B = O` and `P(A n B) = 0`). The probability of any of `2` or more events occurring is the union (`u`) of events. Because disjoint probabilities have no common events, the probability of the union of disjoint events is the sum of the events' individual probabilities. `A` and `B` are said to be collectively exhaustive if their union covers all events in the sample space (i.e., `A u B = S` and `P (A u B) = 1`). This brings us to our next fundamental rule of probability: if `2` events, `A` and `B`, are disjoint, then the probability of either event is the sum of the probabilities of the `2` events (i.e.,`P (A or B) = P(A) + P(B)`).
 
 If the outcome of the first event (`A`) has no impact on the second event (`B`), then they are considered to be independent (e.g., tossing a fair coin). This brings us to the next fundamental rule of probability: the multiplication rule. It states that if two events,`A` and `B`, are independent, then the probability of both events is the product of the probabilities for each event (i.e., `P(A and B) = P(A)*P(B)`). The chance of all events occurring in a sequence of events is called the intersection (`n`) of those events.
 
@@ -190,5 +190,15 @@ P (B | A) = P (A n B)/ P(A)
 
 #### Example 1
 
-![Conditional probability](images/conditional-prob.png)
+![Conditional probability](images/conditional-prob1.png)
 
+### Bayes rule
+
+Let `A` and `B` be two events such that `P (A | B)` denotes the probability of the occurrence of `A` given that `B` has occurred and `P (B | A)` denotes the probability of `B` the occurrence of given that `A` has occurred, then:
+
+```python
+P (A | B) = P (B | A) * P (A)/ P(B) = P ( B | A) * P (A) / ( P (B | A)*P(A) +P (B | A_c) * P(A_c))
+```
+
+#### Example 2
+![Bayes rule](images/conditional-prob2.png)
