@@ -226,3 +226,40 @@ n_C_r = n_P_r / r! = n! (r! *(n-r)!)
 ```
 
 When we talk about combinations, we're talking about the number of subsets of size `r` that can be made from a set of size `n`. In fact, `n_C_r` is often referred to as "`n` choose `r`", because it's counting the number of `r`-element combinations that can be chosen from a set of `n` elements. In notation, `n_C_r` is typically written as `(n r)`. 
+
+## Day 4
+
+### Random Variable
+
+A random variable, `X`, is the real-valued function `X : S -> R` in which there is an event for each interval `I` where `I C= R` . You can think of it as the set of probabilities for the possible outcomes of a sample space. For example, if you consider the possible sums for the values rolled by `2` four-sided dice:
+
+![Random variable](images/random-variable.png)
+
+**Note**: When we roll two dice, the value rolled by each die is independent of the other.
+
+### Binomial experiment
+
+A binomial experiment (or Bernoulli trial) is a statistical experiment that has the following properties:
+
+- The experiment consists of `n` repeated trials.
+- The trials are independent.
+- The outcome of each trial is either success (`s`) or failure (`f`).
+
+### Bernoulli Random Variable and Distribution
+
+The sample space of a binomial experiment only contains two points, `s` and  `f`. We define a Bernoulli random variable to be the random variable defined by `X ( s ) = 1` and `X(f) = 0`. If we consider the probability of success to be `p` and the probability of failure to be `q` (where `q = 1 - p`), then the probability mass function (PMF) of `X` is:
+
+```python
+    p(x):
+        1 - p = q if x = 0
+        p         if x = 1
+        0         otherwise
+```
+We can also express this as:
+
+```python
+    f(x) = (p^x)*((1-p)^(1-x)), for x E {0,1}
+```
+
+
+
