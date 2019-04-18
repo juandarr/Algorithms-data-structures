@@ -261,5 +261,41 @@ We can also express this as:
     f(x) = (p^x)*((1-p)^(1-x)), for x E {0,1}
 ```
 
+### Binomial Distribution
+
+We define a binomial process to be a binomial experiment meeting the following conditions:
+
+-   The number of successes is `x`.
+-   The total number of trials is `n`.
+-   The probability of success of `1` trial is `p`.
+-   The probability of failure of `1` trial `q`, where `q = 1 - p`.
+- `b(x , n , p)` is the binomial probability, meaning the probability of having exactly `x` successes out of `n` trials.
+
+The binomial random variable is the number of successes, `x`, out of `n` trials.
+
+The binomial distribution is the probability distribution for the binomial random variable, given by the following probability mass function:
+
+```python
+    b(x,n,p) = [n x] * (p^x) * q^(n-x)
+```
+
+Note: Recall that `[n x] = n!/(x!*(n-x)!)`. For further review, see the Combinations and Permutations Tutorial. 
+
+### Cumulative Probability
+
+We consider the distribution function for some real-valued random variable, `X`, to be  `F_X(x) = P(X <= x)`. Because this is a non-decreasing function that accumulates all the probabilities for the values of `X` up to (and including) `x`, we call it the cumulative distribution function (CDF) of `X`. As the CDF expresses a cumulative range of values, we can use the following formula to find the cumulative probabilities for all `x E [a,b]`:
+
+```python
+    P (a < X <= b) = F_X(b) - F_X(a)
+```
+
+#### Example
+
+![Cumulative binomial probability examples](images/cumulative-binomial.png)
+
+### Geometric distribution
+
+See [here](https://www.hackerrank.com/challenges/s10-geometric-distribution-1/tutorial).
+
 
 
