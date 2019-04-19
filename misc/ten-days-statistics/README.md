@@ -298,4 +298,14 @@ We consider the distribution function for some real-valued random variable, `X`,
 See [here](https://www.hackerrank.com/challenges/s10-geometric-distribution-1/tutorial).
 
 
+## Day 5
+
+### Poisson distribution 
+
+See [here](https://www.hackerrank.com/challenges/s10-poisson-distribution-1/tutorial).
+
+### Normal distribution
+
+See [here](https://www.hackerrank.com/challenges/s10-normal-distribution-1/tutorial).
+
 
