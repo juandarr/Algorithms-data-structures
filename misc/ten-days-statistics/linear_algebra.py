@@ -1,4 +1,6 @@
 from math import cos,sin, pi
+import numpy.linalg as algebra
+import numpy as np
 
 '''
 Implementation of classes useful for Linear Algebra Study
@@ -23,6 +25,38 @@ class Matrix:
             for i in range(len(self.matrix)):
                 temp_matrix[j].append(self.matrix[i][j])
         return Matrix(temp_matrix)
+
+    def determinant(self):
+        if (len(self.matrix)==2 and len(self.matrix[0])==2):
+            return (self.matrix[0][0]*self.matrix[1][1]-self.matrix[0][1]*self.matrix[1][0])
+        elif (len(self.matrix)==3 and len(self.matrix[0])==3):
+            a = self.matrix[1][1]*self.matrix[2][2] - self.matrix[1][2]*self.matrix[2][1]
+            b = - (self.matrix[1][0]*self.matrix[2][2] - self.matrix[1][2]*self.matrix[2][0])
+            c = self.matrix[1][0]*self.matrix[2][1] - self.matrix[1][1]*self.matrix[2][0]
+            return (a*self.matrix[0][0] + b*self.matrix[0][1] + c*self.matrix[0][2])
+        else:
+            ar = np.array(self.matrix)
+            determinant = algebra.det(ar)
+            return determinant 
+
+    def inverse(self):
+        if (len(self.matrix)==2 and len(self.matrix[0])==2):
+            return (1/self.determinant())*Matrix([[self.matrix[1][1], -self.matrix[0][1]],[-self.matrix[1][0], self.matrix[0][0]]])
+        elif (len(self.matrix)==3 and len(self.matrix[0])==3):
+            a = self.matrix[1][1]*self.matrix[2][2] - self.matrix[1][2]*self.matrix[2][1]
+            b = - (self.matrix[1][0]*self.matrix[2][2] - self.matrix[1][2]*self.matrix[2][0])
+            c = self.matrix[1][0]*self.matrix[2][1] - self.matrix[1][1]*self.matrix[2][0]
+            d = - (self.matrix[0][1]*self.matrix[2][2] - self.matrix[0][2]*self.matrix[2][1])
+            e = self.matrix[0][0]*self.matrix[2][2] - self.matrix[0][2]*self.matrix[2][0]
+            f = - (self.matrix[0][0]*self.matrix[2][1] - self.matrix[0][1]*self.matrix[2][0])
+            g = self.matrix[0][1]*self.matrix[1][2] - self.matrix[0][2]*self.matrix[1][1]
+            h = - (self.matrix[0][0]*self.matrix[1][2] - self.matrix[0][2]*self.matrix[1][0])
+            i = self.matrix[0][0]*self.matrix[1][1] - self.matrix[0][1]*self.matrix[1][0]
+            return (1/self.determinant())*Matrix([[a,b,c],[d,e,f],[g,h,i]]).transpose()
+        else:
+            ar = np.array(self.matrix)
+            ar_inv = algebra.inv(ar)
+            return Matrix(ar_inv.tolist())
 
 
     def __add__(self, other):
