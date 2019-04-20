@@ -14,8 +14,16 @@ class Matrix:
             print('Input element must be a list or a list of lists.\n')
 
 
-    def getsize(self):
+    def size(self):
         return [len(self.matrix), len(self.matrix[0])]
+
+    def transpose(self):
+        temp_matrix = [[] for i in range(len(self.matrix[0]))]
+        for j in range(len(self.matrix[0])):
+            for i in range(len(self.matrix)):
+                temp_matrix[j].append(self.matrix[i][j])
+        return Matrix(temp_matrix)
+
 
     def __add__(self, other):
         temp_matrix = [[] for i in range(len(self.matrix))]
@@ -38,33 +46,33 @@ class Matrix:
             print('Dimensions of matrices don\'t match: {0}x{1} and {2}x{3}'.format(len(self.matrix),len(self.matrix[0]),len(other.matrix),len(other.matrix[0])))
 
     def __mul__(self,other):
-        if (len(self.matrix[0])==len(other.matrix)):
-            temp_matrix = [[] for i in range(len(self.matrix))]
-            for i in range(len(self.matrix)):
-                for j in range(len(other.matrix[0])):
-                    value = 0
-                    for k in range(len(self.matrix[0])):
-                        value += self.matrix[i][k]*other.matrix[k][j]
-                    temp_matrix[i].append(value) 
-            return Matrix(temp_matrix)
-
-    def __rmul__(self,other):
-        if type(other)!=type([]):
+        if type(other)!=type(Matrix([[]])):
             temp_matrix = [[] for i in range(len(self.matrix))]
             for i in range(len(self.matrix)):
                 for j in range(len(self.matrix[0])):
                     temp_matrix[i].append(other*self.matrix[i][j]) 
             return Matrix(temp_matrix)
         else:
-            if (len(self.matrix)==len(other.matrix[0])):
-                temp_matrix = [[] for i in range(len(other.matrix))]
-                for i in range(len(other.matrix)):
-                    for j in range(len(self.matrix[0])):
+            if (len(self.matrix[0])==len(other.matrix)):
+                temp_matrix = [[] for i in range(len(self.matrix))]
+                for i in range(len(self.matrix)):
+                    for j in range(len(other.matrix[0])):
                         value = 0
-                        for k in range(len(other.matrix[0])):
-                            value += other.matrix[i][k]*self.matrix[k][j]
+                        for k in range(len(self.matrix[0])):
+                            value += self.matrix[i][k]*other.matrix[k][j]
                         temp_matrix[i].append(value) 
                 return Matrix(temp_matrix)
+            else:
+                print('Number of columns of first matrix must be equal to the number of rows of the second matrix.\nInstead: {0}x{1} and {2}x{3}'.format(len(self.matrix),len(self.matrix[0]),len(other.matrix),len(other.matrix[0])))
+    
+    def __rmul__(self,other):
+        if type(other)!=type(Matrix([[]])):
+            temp_matrix = [[] for i in range(len(self.matrix))]
+            for i in range(len(self.matrix)):
+                for j in range(len(self.matrix[0])):
+                    temp_matrix[i].append(other*self.matrix[i][j]) 
+            return Matrix(temp_matrix)
+
 
     def __truediv__(self,other):
         temp_matrix = [[] for i in range(len(self.matrix))]
@@ -101,6 +109,10 @@ class Matrix:
             else: 
                 s += ' ]'
         return s
+    
+    @classmethod
+    def polarToVector(cls, mag : float, dir: float) -> 'Vector':
+    	return cls([mag*cos((dir/180.0)*pi), mag*sin((dir/180.0)*pi)])
 
 class Vector:
     def __init__(self, vec):
