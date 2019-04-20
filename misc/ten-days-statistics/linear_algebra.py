@@ -27,6 +27,9 @@ class Matrix:
         return Matrix(temp_matrix)
 
     def determinant(self):
+        if (len(self.matrix)!=len(self.matrix[0])):
+            print('Matrix is non-square.\n')
+            return None
         if (len(self.matrix)==2 and len(self.matrix[0])==2):
             return (self.matrix[0][0]*self.matrix[1][1]-self.matrix[0][1]*self.matrix[1][0])
         elif (len(self.matrix)==3 and len(self.matrix[0])==3):
@@ -40,6 +43,16 @@ class Matrix:
             return determinant 
 
     def inverse(self):
+
+        
+        if (len(self.matrix)!=len(self.matrix[0])):
+            print('Matrix is non-square.\n')
+            return Matrix([[]])
+        det = self.determinant()
+        if (det==0):
+            print('Matrix is non-singular/degenerate.\n')
+            return Matrix([[]])
+        
         if (len(self.matrix)==2 and len(self.matrix[0])==2):
             return (1/self.determinant())*Matrix([[self.matrix[1][1], -self.matrix[0][1]],[-self.matrix[1][0], self.matrix[0][0]]])
         elif (len(self.matrix)==3 and len(self.matrix[0])==3):
