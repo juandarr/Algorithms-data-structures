@@ -308,4 +308,19 @@ See [here](https://www.hackerrank.com/challenges/s10-poisson-distribution-1/tuto
 
 See [here](https://www.hackerrank.com/challenges/s10-normal-distribution-1/tutorial).
 
+## Day 6
 
+### Central limit theorem 
+
+The central limit theorem (CLT) states that, for a large enough sample (`n`), the distribution of the sample mean will approach normal distribution. This holds for a sample of independent random variables from any distribution with a finite standard deviation.
+
+Let `{X_1,X_2,X_3,...,X_n}` be a random data set of size `n`, that is, a sequence of independent and identically distributed random variables drawn from distributions of expected values given by `u` and finite variances given by `sigma_squared`. The sample average is:
+```python
+    s_n := sum(X_i for i in range(N))/N
+```
+
+
+For large `n`, the distribution of sample sums `S_n` is close to normal distribution `N(u',sigma')` where:
+
+    - `u' = n * u`
+    - `sigma' = sqrt(n)*sigma`
