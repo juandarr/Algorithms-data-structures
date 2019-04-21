@@ -24,6 +24,7 @@ def covariance(x, y, n):
             cov += (x[i]-x_mean)*(y[i]-y_mean)
         cov /= n
         return cov
+        
 def rank(ar,n):
     zipped = zip(ar, [i for i in range(1,n+1)])
     ar_list = list(zipped)

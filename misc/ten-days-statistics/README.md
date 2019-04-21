@@ -324,3 +324,36 @@ For large `n`, the distribution of sample sums `S_n` is close to normal distribu
 
     - `u' = n * u`
     - `sigma' = sqrt(n)*sigma`
+
+## Day 7
+
+### Covariance
+
+This is a measure of how two random variables change together, or the strength of their correlation.
+
+Consider two random variables, `X` and `Y`, each with `n` values (i.e.,`x_1`, `x_2`,..., `x_n` and `y_1`, `y_2`,...,`y_n` ). The covariance of `X` and `Y` can be found using either of the following equivalent formulas: 
+
+![Covariance formulas](images/covariance.png)
+
+Here, `x_mean` is the mean of `X` and `y_mean` is the mean of Y. 
+
+### Pearson correlaction coefficient
+
+The Pearson correlation coefficient, `rho_x_y`, is given by:
+```python
+    rho_x_y =  cov(X,Y)/(x_sigma*y_sigma)
+```
+Here, `x_sigma` is the standard deviation of `X` and `y_sigma` is the standard deviation of `Y`. You may also see `rho_x_y` written as `r_x_y`. 
+
+### Spearman rank correlation coefficient
+
+We have two random variables, `X` and `Y`:
+
+    - `X = {x_1, x_2, x_3,...,x_n}`
+    - `Y = {y_1, y_2, y_3,...,y_n}`
+
+If `Rank_x` and `Rank_y` denote the respective ranks of each data point, then the Spearman's rank correlation coefficient, `r_s` , is the Pearson correlation coefficient of `Rank_x` and `Rank_y`.
+
+#### Example
+
+![Example of Spearman rank correlation](images/spearman.png)
