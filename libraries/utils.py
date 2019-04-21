@@ -1,4 +1,4 @@
-from collectables import *
+from statistics import *
 from linear_algebra import *
 
 
