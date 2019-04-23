@@ -357,3 +357,34 @@ If `Rank_x` and `Rank_y` denote the respective ranks of each data point, then th
 #### Example
 
 ![Example of Spearman rank correlation](images/spearman.png)
+
+## Day 8
+
+### Regression line
+
+If our data shows a linear relationship between `X` and `Y`, then the straight line which best describes the relationship is the regression line. The regression line is given by `Y_hat = a + bX`. 
+
+### Finding the value of `b`
+
+The value of `b` can be calculated using either of the following formulae:
+
+![Slope value](images/slope-regression.png)
+
+Alternatively, 
+```python
+    b = rho * std_dev_Y/ std_dev_X
+```
+where `rho` is the Pearson correlation coefficient,`std_dev_X` is the standard deviation of `X` and `std_dev_Y` is the standard deviation of `Y`.
+
+### Finding the value of `a`
+
+`a = y_mean - b * x_mean`, where `x_mean` is the mean of `X` and `y_mean` is the mean of `Y`.
+
+### Sums of squares
+
+- Total sums of squares: SST = sum((y_i - y_mean)**2)
+- Regresion sums of squares: SSR = sum((y_hat_i - y_mean)**2)
+- Error sums of squares: SSE = sum((y_hat_i - y_i)**2)
+
+If SSE is small, we can assume that our fit is good.
+
