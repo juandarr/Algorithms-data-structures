@@ -388,3 +388,37 @@ where `rho` is the Pearson correlation coefficient,`std_dev_X` is the standard d
 
 If SSE is small, we can assume that our fit is good.
 
+### Coefficient of determinantion (R-squared)
+
+```python
+R**2 = SSR / SST = 1 - SSE / SST
+```
+
+`R**2` multiplied by `100` gives the percent of variation attributed to the linear regression between `Y` and `X`.
+
+### Example of linear regression
+
+![Linear regression example](images/example-linear-regression.png)
+
+### Linear regression in Python
+
+We can use the fit function in the sklearn.linear_model.LinearRegression class.
+
+```python
+from sklearn import linear_model
+import numpy as np
+xl = [1, 2, 3, 4, 5]
+x = np.asarray(xl).reshape(-1, 1)
+y = [2, 1, 4, 3, 5]
+lm = linear_model.LinearRegression()
+lm.fit(x, y)
+print(lm.intercept_)
+print(lm.coef_[0])
+```
+
+Running the above code produces the following output:
+
+```python
+0.6
+0.8
+```
