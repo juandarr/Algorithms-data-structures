@@ -154,7 +154,7 @@ Here are the first two fundamental rules of probability:
 
 So how do we bridge the gap between the value of `P(A)`and the sample space? Quite simply, since we know that `P(A)` is the probability that event `A` will occur, then we define `P(A_c)`(also written as `P(A')`) to be the probability that event `A` will not occur (the complement of `P(A)`). If our sample space is composed of the probabilities of `A`'s occurrence and non-occurrence, we can then say `P(A) + P(A_c) = 1`, or the sum of all possible outcomes of `A` in the sample space is equal to `1`. This is the third fundamental rule of probability: 
 
-    3, `P(A_c) = 1 - P(A)`.
+    3. `P(A_c) = 1 - P(A)`.
 
 #### Example 1
 

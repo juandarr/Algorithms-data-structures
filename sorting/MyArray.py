@@ -69,6 +69,49 @@ class MyArray():
                     self.arr[gap_index] = temp_val
                     break
             starting_index += 1
+    
+    def quicksort(self):
+
+        self.step = 0
+
+        def swap(left_pointer, right_pointer):
+            tmp = self.arr[left_pointer]
+            self.arr[left_pointer] = self.arr[right_pointer]
+            self.arr[right_pointer] = tmp
+
+        def partitioning(left_pointer, right_pointer):
+            pivot = self.arr[right_pointer]
+            pivot_position = right_pointer
+            right_pointer -= 1
+
+            while True:
+                while (self.arr[left_pointer] < pivot):
+                    left_pointer += 1    
+
+                while (self.arr[right_pointer] >= pivot):
+                    right_pointer -= 1
+
+                if (left_pointer >= right_pointer):
+                    swap(left_pointer, pivot_position)
+                    break
+                else:
+                    swap(left_pointer, right_pointer)
+                    left_pointer += 1
+                    right_pointer -= 1
+                    
+            return left_pointer
+        
+        def qs(left_pointer, right_pointer):
+            if (left_pointer >= right_pointer):
+                return
+            pivot = partitioning(left_pointer, right_pointer)
+            qs(left_pointer, pivot-1)
+            qs(pivot+1, right_pointer)
+
+        lp = 0
+        rp = len(self.arr)-1
+        qs(lp,rp)
+
 
                 
 
