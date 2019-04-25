@@ -2,6 +2,8 @@
 
 ## Day 0: mean, median and modal
 
+Link: [Mean, median and modal](https://www.hackerrank.com/challenges/s10-basic-statistics/tutorial).
+
 ### Mean (also called average, represented by the `mu` greek letter)
 
 The average of all the integers in a set of values. Here is the basic formula for calculating the mean of a set of `n` values:
@@ -16,13 +18,13 @@ The midpoint value of a data set for which an equal number of samples are less t
 
 ### Mode
 
-The element(s) that occur most frequently in a data set. For the set `{1,1,1,2,2,3,4,4}`, the mode is because the number appears three times in the set and every other number in the set has a frequency `<3`. In contrast, the set `{1,2,3,4}` is multimodal because no number in the set appears more than `1` time, so every number in the set is a valid mode.
+The element(s) that occur most frequently in a data set. For the set `{1,1,1,2,2,3,4,4}`, the mode is `1` because the number appears three times in the set and every other number in the set has a frequency `<3`. In contrast, the set `{1,2,3,4}` is multimodal because no number in the set appears more than `1` time, so every number in the set is a valid mode.
 
 ### Precision and Scale
 
 These are important terms to understand when formatting your output:
 
-- Precision refers to the number of significant digits in a number. For example, the numbers and both have a precision of `5`.
+- Precision refers to the number of significant digits in a number. For example, the numbers `123.45` and `0.0012345` both have a precision of `5`.
 - Scale refers to the number of significant digits to the right of the decimal point. For example, the number `123.45` has a scale of `2` decimal places. This term is sometimes misrepresented as precision in documentation. 
 
 ### Setting precision in python
@@ -58,6 +60,8 @@ print (round(a,2))
 ```
 
 ## Day 1: Quartiles
+
+Link: [Quartiles](https://www.hackerrank.com/challenges/s10-quartiles/tutorial).
 
 ### Quartile
 
@@ -108,7 +112,10 @@ As there are an even number of data points in the original ordered data set, we 
 ```
 The median of the lower half is `15`, so the value of the first quartile is `15`, and the median of the upper half is `40`, so the value of the third quartile is `40`.
 
+Here is the link supporting the following topics: [Expected value, variance and standard deviation](https://www.hackerrank.com/challenges/s10-standard-deviation/tutorial)
+
 ### Expected Values
+
 
 The expected value of a discrete random variable, `X`, is more or less another way of referring to the mean (`mu`). We can also refer to this as the mathematical expectation (or just the expectation) of `X`.
 
@@ -145,7 +152,9 @@ Here are the first two fundamental rules of probability:
     1. Any probability, `P(A)`, is a number between `0` and `1` (i.e.,`0 <= P(A) <= 1`).
     2. The probability of the sample space, `S`, is `1` (i.e.,`P(S) = 1`).
 
-So how do we bridge the gap between the value of `P(A)`and the sample space? Quite simply, since we know that `P(A)` is the probability that event `A` will occur, then we define `P(A_c)`(also written as `P(A')`) to be the probability that event `A` will not occur (the complement of `P(A)`). If our sample space is composed of the probabilities of `A`'s occurrence and non-occurrence, we can then say `P(A) + P(A_c) = 1`, or the sum of all possible outcomes of `A` in the sample space is equal to `1`. This is the third fundamental rule of probability: `P(A_c) = 1 - P(A)`.
+So how do we bridge the gap between the value of `P(A)`and the sample space? Quite simply, since we know that `P(A)` is the probability that event `A` will occur, then we define `P(A_c)`(also written as `P(A')`) to be the probability that event `A` will not occur (the complement of `P(A)`). If our sample space is composed of the probabilities of `A`'s occurrence and non-occurrence, we can then say `P(A) + P(A_c) = 1`, or the sum of all possible outcomes of `A` in the sample space is equal to `1`. This is the third fundamental rule of probability: 
+
+    3, `P(A_c) = 1 - P(A)`.
 
 #### Example 1
 
@@ -205,7 +214,7 @@ P (A | B) = P (B | A) * P (A)/ P(B) = P ( B | A) * P (A) / ( P (B | A)*P(A) +P (
 
 As you may have already noticed, finding patterns in the possible ways events can occur is very useful in helping us count the number of desirable events in our sample space. Two of the easiest methods for doing this are with permutations (when order matters) and combinations (when order doesn't matter). 
 
-### Permuations
+### Permutations
 
 An ordered arrangement of `r` objects from a set,`A` , of `n` objects (where `0 < r <= n`) is called an `r`-element permutation of `A`. You can also think of this as a permutation of `A`'s elements taken `r` at a time. The number of `r`-element permutations of an `n`-object set is denoted by the following formula:
 
