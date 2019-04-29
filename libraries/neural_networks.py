@@ -11,10 +11,10 @@ Features:
 class NeuralNetworks:
 
     def __init__(self,input, output):
-        input_size = input
-        output_size = output
-        hidden_size = 0
-        theta = Matrix([[random() for j in range(input_size)] for i in range(output_size)])
+        self.input_size = input
+        self.output_size = output
+        self.hidden_size = 0
+        self.theta = Matrix([[random() for j in range(self.input_size)] for i in range(self.output_size)])
 
     @staticmethod    
     def sigmoid(x, theta):
