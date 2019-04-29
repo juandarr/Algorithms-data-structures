@@ -17,9 +17,13 @@ class NeuralNetworks:
         self.theta = Matrix([[random() for j in range(self.input_size)] for i in range(self.output_size)])
 
     @staticmethod    
-    def sigmoid(x, theta):
-        prod = theta*x
+    def sigmoid(prod):
         for i in range(len(prod)):
             prod[i] = 1/(1+exp(-prod[i]))
         return prod
+
+    def feed_forward(self,x):
+        prod = self.theta * Matrix(x)
+        return prod
+
 
