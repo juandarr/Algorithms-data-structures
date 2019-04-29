@@ -18,12 +18,28 @@ class NeuralNetworks:
 
     @staticmethod    
     def sigmoid(prod):
-        for i in range(len(prod)):
-            prod[i] = 1/(1+exp(-prod[i]))
+        for i in range(len(prod.matrix[0])):
+            prod.matrix[0][i] = 1/(1+exp(-prod.matrix[0][i]))
         return prod
 
     def feed_forward(self,x):
-        prod = self.theta * Matrix(x)
+        prod = self.sigmoid(self.theta * Matrix(x).transpose())
         return prod
 
+    def back_propagation(self):
+        pass
 
+if __name__=='__main__':
+    nn = NeuralNetworks(3,1)
+    #print('\nNAND gate')
+    #nn.theta.matrix[0] = [20,-15,-15]
+    #print('\nNOR gate')
+    #nn.theta.matrix[0] = [10,-15,-15]
+    #print('\nOR gate')
+    #nn.theta.matrix[0] = [-15,20,20]
+    print('\nAND gate')
+    nn.theta.matrix[0] = [-15,10,10]
+    x = [[1,0,0],[1,1,0],[1,0,1],[1,1,1]]
+    print([(i[1],i[2]) for i in x])
+    y = nn.feed_forward(x)
+    print(y)
