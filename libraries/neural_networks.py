@@ -14,7 +14,7 @@ class NeuralNetworks:
         self.input_size = input
         self.output_size = output
         self.hidden_size = 0
-        self.theta = Matrix([[random() for j in range(self.input_size)] for i in range(self.output_size)])
+        self.theta = Matrix([[random() for j in range(self.input_size + 1)] for i in range(self.output_size)])
 
     @staticmethod    
     def sigmoid(prod):
@@ -23,6 +23,8 @@ class NeuralNetworks:
         return prod
 
     def feed_forward(self,x):
+        for i in range(len(x)):
+            x[i] = [1] + x[i]
         prod = self.sigmoid(self.theta * Matrix(x).transpose())
         return prod
 
@@ -30,7 +32,7 @@ class NeuralNetworks:
         pass
 
 if __name__=='__main__':
-    nn = NeuralNetworks(3,1)
+    nn = NeuralNetworks(2,1)
     #print('\nNAND gate')
     #nn.theta.matrix[0] = [20,-15,-15]
     #print('\nNOR gate')
@@ -38,8 +40,9 @@ if __name__=='__main__':
     #print('\nOR gate')
     #nn.theta.matrix[0] = [-15,20,20]
     print('\nAND gate')
-    nn.theta.matrix[0] = [-15,10,10]
-    x = [[1,0,0],[1,1,0],[1,0,1],[1,1,1]]
-    print([(i[1],i[2]) for i in x])
+    y = [0,0,0,1]
+    #nn.theta.matrix[0] = [-15,10,10]
+    x = [[0,0],[1,0],[0,1],[1,1]]
+    print([(i[0],i[1]) for i in x])
     y = nn.feed_forward(x)
     print(y)
