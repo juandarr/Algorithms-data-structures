@@ -35,8 +35,6 @@ class NeuralNetworks:
         layers_range = [self.size[0]]+ self.hidden_size + [self.size[-1]]
         for i in range(len(layers_range)-1):
             self.theta.append(Matrix([[random() for m in range(layers_range[i] + 1)] for n in range(layers_range[i+1])]))
-        #for i in range(len(self.theta)):
-        #    print(i, "\n\b", self.theta[i])
 
     def getSize(self):
         return [self.size[0]]+ self.hidden_size + [self.size[-1]]
@@ -53,17 +51,17 @@ class NeuralNetworks:
                 if (i==(len(self.theta)-1)):
                     break
             input_data = Matrix(output_data.matrix.copy()).transpose()
-
             for j in range(len(input_data.matrix)):
                 input_data.matrix[j] = [1] + input_data.matrix[j]
 
         return output_data
 
     def back_propagation(self):
+        
         pass
 
 if __name__=='__main__':
-    nn = NeuralNetworks(2,1)
+    nn = NeuralNetworks(2,2)
     #print('\nNAND gate')
     #nn.theta.matrix[0] = [20,-15,-15]
     #print('\nNOR gate')
@@ -75,6 +73,7 @@ if __name__=='__main__':
     #nn.theta[0].matrix[0] = [-15,10,10]
     x = [[0,0],[1,0],[0,1],[1,1]]
     nn.add(5)
+    nn.add(8)
     print('Network size: {}'.format(nn.getSize()))
     print([(i[0],i[1]) for i in x])
     y = nn.feed_forward(x)
