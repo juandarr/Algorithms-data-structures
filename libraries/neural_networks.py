@@ -15,6 +15,7 @@ class NeuralNetworks:
         self.hidden_size = []
         self.total_layers = 2
         self.init_weights()
+        self.activations = []
 
     @staticmethod    
     def sigmoid(prod):
@@ -39,21 +40,20 @@ class NeuralNetworks:
     def getSize(self):
         return [self.size[0]]+ self.hidden_size + [self.size[-1]]
 
+    '''
+    Feed forward algorithm.
+    Correct representation of data is one column (vector) per sample
+    '''
     def feed_forward(self,x):
-        for i in range(len(x)):
-            x[i] = [1] + x[i]
-        input_data = x
+        output_data = Matrix(x)
+        self.activations =[]
         for i in range(len(self.theta)):
-            if i==0:
-                output_data = self.sigmoid(self.theta[i] * Matrix(x).transpose())
-            else:
-                output_data = self.sigmoid(self.theta[i] * input_data.transpose())
-                if (i==(len(self.theta)-1)):
-                    break
+            self.activations.append(output_data)
             input_data = Matrix(output_data.matrix.copy()).transpose()
             for j in range(len(input_data.matrix)):
                 input_data.matrix[j] = [1] + input_data.matrix[j]
-
+            output_data = self.sigmoid(self.theta[i] * input_data.transpose())
+        self.activations.append(output_data)
         return output_data
 
     def back_propagation(self):
@@ -61,20 +61,22 @@ class NeuralNetworks:
         pass
 
 if __name__=='__main__':
-    nn = NeuralNetworks(2,2)
+    nn = NeuralNetworks(2,1)
     #print('\nNAND gate')
     #nn.theta.matrix[0] = [20,-15,-15]
     #print('\nNOR gate')
     #nn.theta.matrix[0] = [10,-15,-15]
     #print('\nOR gate')
     #nn.theta.matrix[0] = [-15,20,20]
-    #print('\nAND gate')
-    #y = [0,0,0,1]
+    print('\nAND gate')
     #nn.theta[0].matrix[0] = [-15,10,10]
-    x = [[0,0],[1,0],[0,1],[1,1]]
+    x = [[0,0,1,1],[0,1,0,1]]
+    y = [0,0,0,1]
     nn.add(5)
-    nn.add(8)
     print('Network size: {}'.format(nn.getSize()))
-    print([(i[0],i[1]) for i in x])
-    y = nn.feed_forward(x)
-    print(y)
+    print([(i[0],i[1]) for i in Matrix(x).transpose().matrix])
+    y_p = nn.feed_forward(x)
+    print('Expected output: ', y)
+    print('Predicted output: ',y_p)
+    #for i in range(len(nn.activations)):
+    #    print(i, nn.activations[i])
