@@ -42,10 +42,10 @@ class NeuralNetworks:
 
     '''
     Feed forward algorithm.
-    Correct representation of data is one column (vector) per sample
+    Representation of data is one column (vector) per sample
     '''
     def feed_forward(self,x):
-        output_data = Matrix(x)
+        output_data = Matrix(x).transpose()
         self.activations =[]
         for i in range(len(self.theta)):
             self.activations.append(output_data)
@@ -56,8 +56,32 @@ class NeuralNetworks:
         self.activations.append(output_data)
         return output_data
 
-    def back_propagation(self):
-        
+    def back_propagation(self, x , y , lambda_r):
+        Delta = [[[0 for i in range(len(self.theta[l].matrix[0]))] for j in range(len(self.theta[l].matrix))] for l in range(len(self.theta))]
+        for m in range(len(x)):
+            deltas = []
+            self.feed_forward([x[m]])
+            deltas.append((self.activations[-1]-Matrix([y[m]]))) 
+            for l in range(len(self.theta)-1, 0, -1):
+                deltas.insert(0,self.theta[l].transpose()*deltas[0])
+            print(deltas)
+        '''            
+            for l in range(len(self.theta)):
+                for j in range(len(self.theta[l].matrix)):
+                    for i in range(len(self.theta[l].matrix[0])-1):
+                        #self.activations[l].matrix[j][0]*deltas[l].matrix[i][0]
+                        print('Activations: ',self.activations[l].matrix)
+                        print('Deltas: ',deltas[l].matrix)
+                        Delta[l][j][i] += (1)
+        D = [[[0 for i in range(len(self.theta[l].matrix[0]))] for j in range(len(self.theta[l].matrix))] for l in range(len(self.theta))]
+        for l in range(len(self.theta)):
+            for j in range(len(self.theta[l].matrix)):
+                for i in range(len(self.theta[l].matrix[0])):
+                    if j==0:
+                        D[l][j][i] = (1/len(x))*Delta[l][j][i]
+                    else:
+                        D[l][j][i] = (1/len(x))*Delta[l][j][i] +lambda_r * self.theta[l].matrix[j][i]
+        '''
         pass
 
 if __name__=='__main__':
@@ -70,13 +94,14 @@ if __name__=='__main__':
     #nn.theta.matrix[0] = [-15,20,20]
     print('\nAND gate')
     #nn.theta[0].matrix[0] = [-15,10,10]
-    x = [[0,0,1,1],[0,1,0,1]]
+    x = [[0,0],[0,1],[1,0],[1,1]]
     y = [0,0,0,1]
     nn.add(5)
     print('Network size: {}'.format(nn.getSize()))
-    print([(i[0],i[1]) for i in Matrix(x).transpose().matrix])
+    print([(i[0],i[1]) for i in x])
     y_p = nn.feed_forward(x)
     print('Expected output: ', y)
     print('Predicted output: ',y_p)
+    nn.back_propagation(x, y , 0.2)
     #for i in range(len(nn.activations)):
     #    print(i, nn.activations[i])
