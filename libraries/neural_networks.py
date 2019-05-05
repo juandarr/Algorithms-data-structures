@@ -1,6 +1,6 @@
 from utils import Matrix
 from random import random
-from math import exp
+from math import exp, log
 '''
 Neural network implementation using sigmoid as activation function.
 Features:
@@ -55,6 +55,26 @@ class NeuralNetworks:
             output_data = self.sigmoid(self.theta[i] * input_data.transpose())
         self.activations.append(output_data)
         return output_data
+    '''
+    Cost function: cross entropy
+    Includes a regularization term to avoid overfitting
+    '''
+    def cost_function(self, x, y, lambda_r):
+        cost = 0
+        for m in range(len(x)):
+            self.feed_forward([x[m]])
+            for k in range(self.size[-1]):
+                cost += y[m][k]*(log(self.activations[-1].matrix[k][0])) + (1-y[m][k])*(log(1-self.activations[-1].matrix[k][0]))
+        cost /= (-1/len(x))
+
+        regularization_term  = 0
+        for l in range(len(self.theta)):
+            for j in range(1,len(self.theta[l].matrix)):
+                for i in range(1,len(self.theta[l].matrix[0])):
+                    regularization_term += (self.theta[l].matrix[j][i])**2
+        regularization_term /= (lambda_r/(2*len(x)))
+        return (cost+regularization_term)
+
 
     def back_propagation(self, x , y , lambda_r):
         Delta = [[[0 for i in range(len(self.theta[l].matrix[0]))] for j in range(len(self.theta[l].matrix))] for l in range(len(self.theta))]
@@ -64,7 +84,12 @@ class NeuralNetworks:
             deltas.append((self.activations[-1]-Matrix([y[m]]))) 
             for l in range(len(self.theta)-1, 0, -1):
                 deltas.insert(0,self.theta[l].transpose()*deltas[0])
-            print(deltas)
+            print('Activations')
+            for i in self.activations:
+                print(i.matrix)
+            print('Deltas')
+            for i in deltas:
+                print(i.matrix)
         '''            
             for l in range(len(self.theta)):
                 for j in range(len(self.theta[l].matrix)):
@@ -95,13 +120,14 @@ if __name__=='__main__':
     print('\nAND gate')
     #nn.theta[0].matrix[0] = [-15,10,10]
     x = [[0,0],[0,1],[1,0],[1,1]]
-    y = [0,0,0,1]
+    y = [[0],[0],[0],[1]]
     nn.add(5)
     print('Network size: {}'.format(nn.getSize()))
     print([(i[0],i[1]) for i in x])
     y_p = nn.feed_forward(x)
     print('Expected output: ', y)
     print('Predicted output: ',y_p)
-    nn.back_propagation(x, y , 0.2)
+    #nn.back_propagation(x, y , 0.2)
+    print(nn.cost_function(x,y,0.02))
     #for i in range(len(nn.activations)):
     #    print(i, nn.activations[i])
