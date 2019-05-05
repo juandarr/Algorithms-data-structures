@@ -77,27 +77,26 @@ class NeuralNetworks:
 
 
     def back_propagation(self, x , y , lambda_r):
-        Delta = [[[0 for i in range(len(self.theta[l].matrix[0]))] for j in range(len(self.theta[l].matrix))] for l in range(len(self.theta))]
+        Delta = [[[0 for i in range(len(self.activations[l].matrix))] for j in range(len(self.activations[l+1].matrix))] for l in range(len(self.activations)-1)]
         for m in range(len(x)):
             deltas = []
             self.feed_forward([x[m]])
             deltas.append((self.activations[-1]-Matrix([y[m]]))) 
             for l in range(len(self.theta)-1, 0, -1):
-                deltas.insert(0,self.theta[l].transpose()*deltas[0])
+                deltas.insert(0,Matrix((self.theta[l].transpose()*deltas[0]).matrix[1:][:]))
+            
             print('Activations')
             for i in self.activations:
                 print(i.matrix)
             print('Deltas')
             for i in deltas:
                 print(i.matrix)
-        '''            
-            for l in range(len(self.theta)):
-                for j in range(len(self.theta[l].matrix)):
-                    for i in range(len(self.theta[l].matrix[0])-1):
-                        #self.activations[l].matrix[j][0]*deltas[l].matrix[i][0]
-                        print('Activations: ',self.activations[l].matrix)
-                        print('Deltas: ',deltas[l].matrix)
-                        Delta[l][j][i] += (1)
+                  
+            for l in range(len(self.activations)-1):
+                for j in range(len(self.activations[l].matrix)):
+                    for i in range(len(deltas[l].matrix)):
+                        Delta[l][j][i] += (self.activations[l].matrix[j][0]*deltas[l].matrix[i][0])
+        '''
         D = [[[0 for i in range(len(self.theta[l].matrix[0]))] for j in range(len(self.theta[l].matrix))] for l in range(len(self.theta))]
         for l in range(len(self.theta)):
             for j in range(len(self.theta[l].matrix)):
@@ -107,7 +106,6 @@ class NeuralNetworks:
                     else:
                         D[l][j][i] = (1/len(x))*Delta[l][j][i] +lambda_r * self.theta[l].matrix[j][i]
         '''
-        pass
 
 if __name__=='__main__':
     nn = NeuralNetworks(2,1)
@@ -127,7 +125,7 @@ if __name__=='__main__':
     y_p = nn.feed_forward(x)
     print('Expected output: ', y)
     print('Predicted output: ',y_p)
-    #nn.back_propagation(x, y , 0.2)
-    print(nn.cost_function(x,y,0.02))
+    nn.back_propagation(x, y , 0.2)
+    #print(nn.cost_function(x,y,0.02))
     #for i in range(len(nn.activations)):
     #    print(i, nn.activations[i])
