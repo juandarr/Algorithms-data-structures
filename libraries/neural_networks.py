@@ -83,7 +83,7 @@ class NeuralNetworks:
             self.feed_forward([x[m]])
             deltas.append((self.activations[-1]-Matrix([y[m]]))) 
             for l in range(len(self.theta)-1, 0, -1):
-                deltas.insert(0,Matrix((self.theta[l].transpose()*deltas[0]).matrix[1:][:]))
+                deltas.insert(0,Matrix((self.theta[l].transpose()*deltas[0]).matrix[1:][:]).pw_prod(self.activations[l]).pw_prod(Matrix([1]*len(self.activations[l].matrix))-self.activations[l]))
             '''
             print('Activations')
             for i in self.activations:

@@ -70,12 +70,23 @@ class Matrix:
             ar_inv = algebra.inv(ar)
             return Matrix(ar_inv.tolist())
 
-    def __add__(self, other):
+    
+    def pw_prod(self, other):
         temp_matrix = [[] for i in range(len(self.matrix))]
         if len(other.matrix[0])==len(self.matrix[0]) and len(other.matrix)==len(self.matrix):
             for i in range(len(self.matrix)):
                 for j in range(len(self.matrix[0])):
                     temp_matrix[i].append(self.matrix[i][j] + other.matrix[i][j])
+            return Matrix(temp_matrix)
+        else:
+            print('Dimensions of matrices don\'t match: {0}x{1} and {2}x{3}'.format(len(self.matrix),len(self.matrix[0]),len(other.matrix),len(other.matrix[0])))
+
+    def __add__(self, other):
+        temp_matrix = [[] for i in range(len(self.matrix))]
+        if len(other.matrix[0])==len(self.matrix[0]) and len(other.matrix)==len(self.matrix):
+            for i in range(len(self.matrix)):
+                for j in range(len(self.matrix[0])):
+                    temp_matrix[i].append(self.matrix[i][j]*other.matrix[i][j])
             return Matrix(temp_matrix)
         else:
             print('Dimensions of matrices don\'t match: {0}x{1} and {2}x{3}'.format(len(self.matrix),len(self.matrix[0]),len(other.matrix),len(other.matrix[0])))
