@@ -44,7 +44,6 @@ class Matrix:
 
     def inverse(self):
 
-        
         if (len(self.matrix)!=len(self.matrix[0])):
             print('Matrix is non-square.\n')
             return Matrix([[]])
@@ -70,7 +69,6 @@ class Matrix:
             ar = np.array(self.matrix)
             ar_inv = algebra.inv(ar)
             return Matrix(ar_inv.tolist())
-
 
     def __add__(self, other):
         temp_matrix = [[] for i in range(len(self.matrix))]

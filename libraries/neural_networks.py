@@ -84,28 +84,27 @@ class NeuralNetworks:
             deltas.append((self.activations[-1]-Matrix([y[m]]))) 
             for l in range(len(self.theta)-1, 0, -1):
                 deltas.insert(0,Matrix((self.theta[l].transpose()*deltas[0]).matrix[1:][:]))
-            
+            '''
             print('Activations')
             for i in self.activations:
                 print(i.matrix)
             print('Deltas')
             for i in deltas:
                 print(i.matrix)
-                  
+            '''   
             for l in range(len(self.activations)-1):
-                for j in range(len(self.activations[l].matrix)):
-                    for i in range(len(deltas[l].matrix)):
-                        Delta[l][j][i] += (self.activations[l].matrix[j][0]*deltas[l].matrix[i][0])
-        '''
-        D = [[[0 for i in range(len(self.theta[l].matrix[0]))] for j in range(len(self.theta[l].matrix))] for l in range(len(self.theta))]
-        for l in range(len(self.theta)):
-            for j in range(len(self.theta[l].matrix)):
-                for i in range(len(self.theta[l].matrix[0])):
+                for j in range(len(self.activations[l+1].matrix)):
+                    for i in range(len(self.activations[l].matrix)):
+                        Delta[l][j][i] += (self.activations[l].matrix[i][0]*deltas[l].matrix[j][0])
+        
+        D = [[[0 for i in range(len(self.activations[l].matrix))] for j in range(len(self.activations[l+1].matrix))] for l in range(len(self.activations)-1)]
+        for l in range(len(self.activations)-1):
+            for j in range(len(self.activations[l+1].matrix)):
+                for i in range(len(self.activations[l].matrix)):
                     if j==0:
                         D[l][j][i] = (1/len(x))*Delta[l][j][i]
                     else:
                         D[l][j][i] = (1/len(x))*Delta[l][j][i] +lambda_r * self.theta[l].matrix[j][i]
-        '''
 
 if __name__=='__main__':
     nn = NeuralNetworks(2,1)
