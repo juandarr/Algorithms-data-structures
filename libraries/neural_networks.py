@@ -30,7 +30,9 @@ class NeuralNetworks:
         self.hidden_size.append(dimension)
         self.total_layers += 1
         self.init_weights()
-
+    '''
+    Weight initialization given the input, output and hidden layers size
+    '''
     def init_weights(self):
         self.theta = []
         layers_range = [self.size[0]]+ self.hidden_size + [self.size[-1]]
@@ -75,23 +77,20 @@ class NeuralNetworks:
         regularization_term /= (lambda_r/(2*len(x)))
         return (cost+regularization_term)
 
-
+    '''
+    Backpropagation algorithm with regulatization term to avoid overfitting. 
+    Given an input x, output y and lambda_r regularization factor calculates de derivatives of the cost function for one iteration
+    '''
     def back_propagation(self, x , y , lambda_r):
         Delta = [[[0 for i in range(len(self.activations[l].matrix))] for j in range(len(self.activations[l+1].matrix))] for l in range(len(self.activations)-1)]
         for m in range(len(x)):
             deltas = []
             self.feed_forward([x[m]])
             deltas.append((self.activations[-1]-Matrix([y[m]]))) 
+
             for l in range(len(self.theta)-1, 0, -1):
                 deltas.insert(0,Matrix((self.theta[l].transpose()*deltas[0]).matrix[1:][:]).pw_prod(self.activations[l]).pw_prod(Matrix([1]*len(self.activations[l].matrix))-self.activations[l]))
-            '''
-            print('Activations')
-            for i in self.activations:
-                print(i.matrix)
-            print('Deltas')
-            for i in deltas:
-                print(i.matrix)
-            '''   
+         
             for l in range(len(self.activations)-1):
                 for j in range(len(self.activations[l+1].matrix)):
                     for i in range(len(self.activations[l].matrix)):
