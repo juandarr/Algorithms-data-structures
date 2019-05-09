@@ -13,10 +13,12 @@ class NeuralNetworks:
     def __init__(self,input, output):
         self.size = [input,output]
         self.hidden_size = []
-        self.total_layers = 2
         self.init_weights()
         self.activations = []
 
+    '''
+    Implementation of sigmoid activation function for a input vector prod
+    '''
     @staticmethod    
     def sigmoid(prod):
         for i in range(len(prod.matrix[0])):
@@ -28,8 +30,8 @@ class NeuralNetworks:
     '''
     def add(self, dimension):
         self.hidden_size.append(dimension)
-        self.total_layers += 1
         self.init_weights()
+
     '''
     Weight initialization given the input, output and hidden layers size
     '''
