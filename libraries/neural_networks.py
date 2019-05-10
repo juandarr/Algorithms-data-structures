@@ -1,6 +1,7 @@
 from utils import Matrix
 from random import random
 from math import exp, log
+import copy
 '''
 Neural network implementation using sigmoid as activation function.
 Features:
@@ -66,14 +67,14 @@ class NeuralNetworks:
     def cost_function(self, x, y, lambda_r=0, g = []):
         cost = 0
         if g != []:
-            self.theta[g[0]].matrix[g[1]][g[2]] = self.theta[g[0]].matrix[g[1]][g[2]]+ g[3]
+            self.theta[g[0]].matrix[g[1]][g[2]] += g[3]
         for m in range(len(x)):
             self.feed_forward([x[m]])
             for k in range(self.size[-1]):
                 cost += y[m][k]*(log(self.activations[-1].matrix[k][0])) + (1-y[m][k])*(log(1-self.activations[-1].matrix[k][0]))
         cost /= (-1/len(x))
         if g != []:
-            self.theta[g[0]].matrix[g[1]][g[2]] = self.theta[g[0]].matrix[g[1]][g[2]]-g[3]
+            self.theta[g[0]].matrix[g[1]][g[2]] -= g[3]
 
         regularization_term  = 0
         if lambda_r !=0:
@@ -82,6 +83,7 @@ class NeuralNetworks:
                     for i in range(1,len(self.theta[l].matrix[0])):
                         regularization_term += (self.theta[l].matrix[j][i])**2
             regularization_term /= (lambda_r/(2*len(x)))
+        print(cost)
         return (cost+regularization_term)
 
     '''
@@ -116,7 +118,7 @@ class NeuralNetworks:
     Compute the gradient matrices for each weight matrix from layer i to layer j
     '''
     def gradient_compute(self, x, y, delta):
-        gradient_theta = self.theta.copy()
+        gradient_theta = copy.deepcopy(self.theta)
         for l in range(len(gradient_theta)):
             for j in range(len(gradient_theta[l].matrix)):
                 for i in range(len(gradient_theta[l].matrix[j])):
@@ -143,16 +145,10 @@ if __name__=='__main__':
     print('Expected output: ', y)
     print('Predicted output: ',y_p)
     D = nn.back_propagation(x, y , 0.2)
-    #D_numeric = nn.gradient_compute(x,y, 0.001)
+    D_numeric = nn.gradient_compute(x,y, 0.01)
     print('D Matrices: ', D)
-    #print('D numeric matrices: ', D_numeric)
-    print('Theta: ', nn.theta)
-    grad = []
-    for i in nn.theta:
-        grad.append(Matrix(i.matrix.copy()))
-    grad[0].matrix[0][0] = 100
-    print('Theta_copy: ',nn.theta)
-    print('grad theta: ', grad)
+    print('D numeric matrices: ', D_numeric)
+  
     
     #print(nn.cost_function(x,y,0.02))
     #for i in range(len(nn.activations)):
