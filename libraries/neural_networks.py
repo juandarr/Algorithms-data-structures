@@ -122,7 +122,7 @@ class NeuralNetworks:
         for l in range(len(gradient_theta)):
             for j in range(len(gradient_theta[l].matrix)):
                 for i in range(len(gradient_theta[l].matrix[j])):
-                    gradient_theta[l].matrix[j][i] = (self.cost_function(x,y,0, [l,j,i,delta]) - self.cost_function(x,y,0,[l,j,i,-delta]))/2*delta
+                    gradient_theta[l].matrix[j][i] = (self.cost_function(x,y,0, [l,j,i,delta]) - self.cost_function(x,y,0,[l,j,i,-delta]))/(2*delta)
         return gradient_theta
 
 
@@ -144,8 +144,13 @@ if __name__=='__main__':
     y_p = nn.feed_forward(x)
     print('Expected output: ', y)
     print('Predicted output: ',y_p)
+    D_numeric = nn.gradient_compute(x,y, 0.001)
     D = nn.back_propagation(x, y , 0.2)
-    D_numeric = nn.gradient_compute(x,y, 0.01)
+    for l in range(len(D)):
+        for j in range(len(D[l])):
+            for i in range(len(D[l][j])):
+                if l==1:
+                    D[l][j][i] *= 16.0
     print('D Matrices: ', D)
     print('D numeric matrices: ', D_numeric)
   
