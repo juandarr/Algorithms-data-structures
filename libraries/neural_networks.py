@@ -63,27 +63,32 @@ class NeuralNetworks:
     Cost function: cross entropy
     Includes a regularization term to avoid overfitting
     '''
-    def cost_function(self, x, y, lambda_r):
+    def cost_function(self, x, y, lambda_r=0, g = []):
         cost = 0
+        if g != []:
+            self.theta[g[0]].matrix[g[1]][g[2]] = self.theta[g[0]].matrix[g[1]][g[2]]+ g[3]
         for m in range(len(x)):
             self.feed_forward([x[m]])
             for k in range(self.size[-1]):
                 cost += y[m][k]*(log(self.activations[-1].matrix[k][0])) + (1-y[m][k])*(log(1-self.activations[-1].matrix[k][0]))
         cost /= (-1/len(x))
+        if g != []:
+            self.theta[g[0]].matrix[g[1]][g[2]] = self.theta[g[0]].matrix[g[1]][g[2]]-g[3]
 
         regularization_term  = 0
-        for l in range(len(self.theta)):
-            for j in range(1,len(self.theta[l].matrix)):
-                for i in range(1,len(self.theta[l].matrix[0])):
-                    regularization_term += (self.theta[l].matrix[j][i])**2
-        regularization_term /= (lambda_r/(2*len(x)))
+        if lambda_r !=0:
+            for l in range(len(self.theta)):
+                for j in range(1,len(self.theta[l].matrix)):
+                    for i in range(1,len(self.theta[l].matrix[0])):
+                        regularization_term += (self.theta[l].matrix[j][i])**2
+            regularization_term /= (lambda_r/(2*len(x)))
         return (cost+regularization_term)
 
     '''
     Backpropagation algorithm with regulatization term to avoid overfitting. 
     Given an input x, output y and lambda_r regularization factor calculates de derivatives of the cost function for one iteration
     '''
-    def back_propagation(self, x , y , lambda_r):
+    def back_propagation(self, x , y , lambda_r=0):
         Delta = [[[0 for i in range(len(self.activations[l].matrix))] for j in range(len(self.activations[l+1].matrix))] for l in range(len(self.activations)-1)]
         for m in range(len(x)):
             deltas = []
@@ -106,6 +111,18 @@ class NeuralNetworks:
                         D[l][j][i] = (1/len(x))*Delta[l][j][i]
                     else:
                         D[l][j][i] = (1/len(x))*Delta[l][j][i] +lambda_r * self.theta[l].matrix[j][i]
+        return D
+    '''
+    Compute the gradient matrices for each weight matrix from layer i to layer j
+    '''
+    def gradient_compute(self, x, y, delta):
+        gradient_theta = self.theta.copy()
+        for l in range(len(gradient_theta)):
+            for j in range(len(gradient_theta[l].matrix)):
+                for i in range(len(gradient_theta[l].matrix[j])):
+                    gradient_theta[l].matrix[j][i] = (self.cost_function(x,y,0, [l,j,i,delta]) - self.cost_function(x,y,0,[l,j,i,-delta]))/2*delta
+        return gradient_theta
+
 
 if __name__=='__main__':
     nn = NeuralNetworks(2,1)
@@ -125,7 +142,18 @@ if __name__=='__main__':
     y_p = nn.feed_forward(x)
     print('Expected output: ', y)
     print('Predicted output: ',y_p)
-    nn.back_propagation(x, y , 0.2)
+    D = nn.back_propagation(x, y , 0.2)
+    #D_numeric = nn.gradient_compute(x,y, 0.001)
+    print('D Matrices: ', D)
+    #print('D numeric matrices: ', D_numeric)
+    print('Theta: ', nn.theta)
+    grad = []
+    for i in nn.theta:
+        grad.append(Matrix(i.matrix.copy()))
+    grad[0].matrix[0][0] = 100
+    print('Theta_copy: ',nn.theta)
+    print('grad theta: ', grad)
+    
     #print(nn.cost_function(x,y,0.02))
     #for i in range(len(nn.activations)):
     #    print(i, nn.activations[i])
