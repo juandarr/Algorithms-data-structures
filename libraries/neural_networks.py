@@ -145,7 +145,7 @@ if __name__=='__main__':
     print('Expected output: ', y)
     print('Predicted output: ',y_p)
     D_numeric = nn.gradient_compute(x,y, 0.001)
-    D = nn.back_propagation(x, y , 0.2)
+    D = nn.back_propagation(x, y , 0.0)
     for l in range(len(D)):
         for j in range(len(D[l])):
             for i in range(len(D[l][j])):
