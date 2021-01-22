@@ -38,11 +38,14 @@ class Solution:
             return False    
         return True
 
-if __name__='__main__':
+if __name__=='__main__':
     tests = ['(((]]', '[]', '(]', '(([{}]))']
     expected = [False, True, False, True]
     solver = Solution()
     for idx, test in enumerate(tests):
         if solver.isValid(test)==expected[idx]:
-            print("Solution {0} is {1}".format()) 
+            state_solution = 'Correct'
+        else:
+            state_solution = 'Incorrect'
+        print("Solution to problem {0} is {1}".format(idx+1, state_solution))     
 
