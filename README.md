@@ -25,18 +25,30 @@ being how the graph is traversed every time a new node (vertex) is explored.
 
 ### BFS (Breath First Search)
 
-- Explore nodes in "layers"
+- Explore nodes in "layers".
 - The graph is traversed by FIFO sequence (First In First Out): every vortex
 in one layer is explored before to the next one.
 - The queue is the natural data structure to follow such sequence. A queue can
-be implemented using doubled linked listed for example. 
+be implemented using doubled linked listed for example. An array is also an 
+option.
 - Running time:
-    - `O(m+n)`, linear time
+    - `O(m+n)`, linear time.
 - Use cases:
-    - Can compute shortest paths
-    - Can find connected components of undirected graphs
+    - Can compute shortest paths.
+    - Can find connected components of undirected graphs.
 
 ### DFS (Depth Fisrt Search)
+
+- Explore layer after layer (depth) aggressively, only backtrack when necessary.
+- The graph is traverse in a LIFO sequence (Last In First Out): vertices are 
+explored in depth, as opposed to depth (BFS).
+- The stack is the natural data structure to follow such sequence. A stack can
+be easily represented by an array.
+- Running time: 
+    - `O(m+n)`, linear time.
+- Use cases:
+    - Compute a topological ordering of a directed acyclic graph.
+    - Finds strongly connected components of directed graphs.
 
 ## Misc
 
