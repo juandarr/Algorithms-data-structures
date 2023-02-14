@@ -20,6 +20,7 @@ def dfs_stack(graph, start):
 # Depth first search algorithm using recursion
 def dfs(graph, start):
     global path
+    global explored
     if start in explored:
         return
     explored.add(start)
