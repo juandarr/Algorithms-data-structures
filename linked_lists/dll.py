@@ -3,17 +3,22 @@ ar = [1, 3, 5, 7, 0, 2, 10]
 
 
 class Node(object):
-    def __init__(self, data, next=None):
+    def __init__(self, data, prev=None, next=None):
         self.data = data
+        self.prev = prev
         self.next = next
 
     def is_last(self):
         return self.next is None
 
+    def is_first(self):
+        return self.prev is None
 
-class Linked_list(object):
-    def __init__(self, first=None):
+
+class Double_linked_list(object):
+    def __init__(self, first=None, last=None):
         self.first = first
+        self.last = last
 
     def is_empty(self):
         return self.first is None
@@ -24,15 +29,26 @@ class Linked_list(object):
 nodes = []
 start_node = Node(ar[0])
 nodes.append(start_node)
-ll = Linked_list(start_node)
+ll = Double_linked_list(start_node)
 for value in ar[1:]:
     new_node = Node(value)
+    new_node.prev = nodes[-1]
     nodes[-1].next = new_node
     nodes.append(new_node)
+ll.last = nodes[-1]
 
-# Traverse linked list
+
+# Traverse double linked list forward
 node = ll.first
-print("Traversing forward")
+print('Traversing forward')
 while (node is not None):
     print(node.data)
     node = node.next
+
+
+# Traverse double linked list backward
+node = ll.last
+print('\nTraversing backward')
+while (node is not None):
+    print(node.data)
+    node = node.prev
