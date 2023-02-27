@@ -108,7 +108,7 @@ def test_dfs_scc():
 # Answer: 434821,968,459,313,211
 if __name__ == "__main__":
     test_dfs_scc()
-    filename = '../resources/web-graph.txt'
+    filename = 'material/graphs/web-graph.txt'
     connections = open(filename, 'r')
     connections = connections.readlines()
     components = dfs_scc(connections)
