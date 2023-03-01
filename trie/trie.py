@@ -40,8 +40,16 @@ class Trie(object):
         currentNode.isEnd = True
 
     # Finds whether a word is contained or not by the trie
-    def contains(self):
-        pass
+    def contains(self, word, matchPrefix=False):
+        if len(word) == 0:
+            return False
+        currentNode = self.root
+        for character in word.lower():
+            if character in currentNode.children:
+                currentNode = currentNode.children[character]
+            else:
+                return False
+        return matchPrefix or currentNode.isEnd
 
     def remove(self):
         pass
