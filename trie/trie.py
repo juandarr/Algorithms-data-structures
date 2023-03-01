@@ -51,8 +51,44 @@ class Trie(object):
                 return False
         return matchPrefix or currentNode.isEnd
 
-    def remove(self):
-        pass
+    def findLastNodeOf(self, word):
+        currentNode = self.root
+        for character in word.lower():
+            if character in currentNode.children:
+                currentNode = currentNode.children[character]
+            else:
+                return None
+        return currentNode
+
+    def findTerminalNodeOf(self, word):
+        lastNode = self.findLastNodeOf(word)
+        if lastNode:
+            if lastNode.isEnd:
+                return lastNode
+        return None
+
+    def deleteNodesForWordEndingWith(self, terminalNode):
+        lastNode = terminalNode
+        character = lastNode.value
+        while lastNode.isLeaf():
+            lastNode = lastNode.parentNode
+            del lastNode.children[character]
+            character = lastNode.value
+            if lastNode.isEnd or lastNode.parentNode is None:
+                break
+
+    # Remove word from trie
+    def remove(self, word):
+        if len(word) == 0:
+            return
+        terminalNode = self.findTerminalNodeOf(word)
+        if not terminalNode:
+            return
+        if terminalNode.isLeaf():
+            self.deleteNodesForWordEndingWith(terminalNode)
+        else:
+            terminalNode.isEnd = False
+        self.wordCount -= 1
 
     # Finds array of words in a subtrie of a the trie
     def wordsInSubtrie(self, rootNode, partialWord):
