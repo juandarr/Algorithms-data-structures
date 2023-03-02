@@ -16,7 +16,7 @@ class Node(object):
             Parent Node, used in trie's delete operation
         children: dict(Node)
             Keeps track of children of current node
-        isEnd: Bool
+        isEnd: bool
             Indicates whether the node is an end node for a word
         """
 
@@ -27,7 +27,12 @@ class Node(object):
 
     def isLeaf(self):
         """
-        Returns a boolean indicating whether the node is a leaf node or not
+        Checks whether the node is a leaf node or not
+
+        Returns
+        ----------
+        boolean
+            A boolean indicating whether the node is a leaf node or not
         """
 
         return len(self.children) == 0
@@ -67,7 +72,7 @@ class Trie(object):
         ----------
             root: Node
                 root node of Trie
-            wordCount: Int
+            wordCount: int
                 Counter of words stored in Trie
         """
 
@@ -76,21 +81,31 @@ class Trie(object):
 
     def isEmpty(self):
         """
-        Indicates whether the trie is empty or not
+        Checks whether the trie is empty or not
+
+        Returns
+        ----------
+        boolean
+            A boolean indicating whether the trie is empty or not
         """
 
         return self.wordCount == 0
 
     def words(self):
         """
-        Returns array of words stored in trie
+        Traverses the trie searching for all the words stored in it
+
+        Returns
+        ----------
+        list
+            A list of words stored in the trie
         """
 
         return self.__wordsInSubtrie(self.root, "")
 
     def insert(self, word):
         """
-        Insert a word in the trie
+        Inserts a word in the trie
         """
 
         if len(word) == 0:
@@ -113,6 +128,12 @@ class Trie(object):
 
         `matchPrefix` is used to require a match of the word as a prefix of
         another word in the trie or match only the entire word
+
+        Returns
+        ----------
+        boolean
+            A boolean indicating whether an entire or prefix word is present
+            in the trie
         """
 
         if len(word) == 0:
@@ -144,6 +165,12 @@ class Trie(object):
     def __findLastNodeOf(self, word):
         """
         Finds last node of word if defined in trie
+
+        Returns
+        ---------
+        Node or None
+            A node storing the last character of a word. Will return None
+            when the entire word is not stored in trie
         """
 
         currentNode = self.root
@@ -159,6 +186,12 @@ class Trie(object):
         Finds terminal node of word if defined in trie
 
         It uses the method `findLastNodeOf` as helper method
+
+        Returns
+        ----------
+        Node or None
+            A node storing the last character of a word. Will return None when
+            the entire word is not store in trie
         """
 
         lastNode = self.__findLastNodeOf(word)
@@ -186,6 +219,12 @@ class Trie(object):
         """
         Finds array of words in a subtrie given a rootNode and the partial
         word preceeding it
+
+        Returns
+        ----------
+        list
+            A list with all the words found from `rootNode` using `partialWord`
+            as prefix
         """
 
         subtrieWords = []
