@@ -1,14 +1,39 @@
 class Node(object):
+    '''
+    Node class
+
+    Store main node properties and helper methods for the trie operations
+    '''
     def __init__(self, value=None, parentNode=None):
+        '''
+        Constructor method
+        ...
+        Parameters
+        ----------
+        value : str
+            Value stored in node
+        parentNode: Node
+            Parent Node, used in trie's delete operations
+        children: dict(Node)
+            Keeps track of children of Node
+        isEnd: Bool
+            Indicates whether the node is an end node for a word
+        '''
         self.value = value
         self.parentNode = parentNode
         self.children = {}
         self.isEnd = False
 
     def isLeaf(self):
+        '''
+        Method that return whether the node is a leaf node or not
+        '''
         return len(self.children) == 0
 
     def addChild(self, value):
+        '''
+        Add child to the children dictionary of nodes
+        '''
         self.children[value] = Node(value, self)
 
 
