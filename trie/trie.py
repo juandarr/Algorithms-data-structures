@@ -1,55 +1,98 @@
 class Node(object):
-    '''
+    """
     Node class
 
     Store main node properties and helper methods for the trie operations
-    '''
+    """
     def __init__(self, value=None, parentNode=None):
-        '''
+        """
         Constructor method
-        ...
+
         Parameters
         ----------
         value : str
             Value stored in node
         parentNode: Node
-            Parent Node, used in trie's delete operations
+            Parent Node, used in trie's delete operation
         children: dict(Node)
-            Keeps track of children of Node
+            Keeps track of children of current node
         isEnd: Bool
             Indicates whether the node is an end node for a word
-        '''
+        """
+
         self.value = value
         self.parentNode = parentNode
         self.children = {}
         self.isEnd = False
 
     def isLeaf(self):
-        '''
-        Method that return whether the node is a leaf node or not
-        '''
+        """
+        Returns a boolean indicating whether the node is a leaf node or not
+        """
+
         return len(self.children) == 0
 
     def addChild(self, value):
-        '''
-        Add child to the children dictionary of nodes
-        '''
+        """
+        Adds child to the children dictionary of nodes
+        """
+
         self.children[value] = Node(value, self)
 
 
 class Trie(object):
+    """
+    Trie data structure for storage of hashable and associative data
+    (e.g., english words, DNA sequences)
+
+    Methods
+    ----------
+    isEmpty()
+        Return whether trie is empty or not
+    words()
+        Returns an array of words stored in the trie
+    insert(word)
+        Insert word in trie
+    contains(word, matchPrefix=False)
+        Indicates whether a word is contained in the trie
+    remove(word)
+        Removed word from the trie
+    """
+
     def __init__(self, root=Node()):
+        """
+        Constructor method
+
+        Parameters
+        ----------
+            root: Node
+                root node of Trie
+            wordCount: Int
+                Counter of words stored in Trie
+        """
+
         self.root = root
         self.wordCount = 0
 
     def isEmpty(self):
+        """
+        Indicates whether the trie is empty or not
+        """
+
         return self.wordCount == 0
 
     def words(self):
-        return self.wordsInSubtrie(self.root, "")
+        """
+        Returns array of words stored in trie
+        """
 
-    # Insert a word in the trie
+        return self.__wordsInSubtrie(self.root, "")
+
     def insert(self, word):
+        """
+        Insert a word in the trie
+        """
+
         if len(word) == 0:
             return
         currentNode = self.root
@@ -64,8 +107,14 @@ class Trie(object):
         self.wordCount += 1
         currentNode.isEnd = True
 
-    # Finds whether a word is contained or not by the trie
     def contains(self, word, matchPrefix=False):
+        """
+        Find whether a word is contained or not in the trie
+
+        `matchPrefix` is used to require a match of the word as a prefix of
+        another word in the trie or match only the entire word
+        """
+
         if len(word) == 0:
             return False
         currentNode = self.root
@@ -76,7 +125,27 @@ class Trie(object):
                 return False
         return matchPrefix or currentNode.isEnd
 
-    def findLastNodeOf(self, word):
+    def remove(self, word):
+        """
+        Removes word from the trie
+        """
+
+        if len(word) == 0:
+            return
+        terminalNode = self.__findTerminalNodeOf(word)
+        if not terminalNode:
+            return
+        if terminalNode.isLeaf():
+            self.__deleteNodesForWordEndingWith(terminalNode)
+        else:
+            terminalNode.isEnd = False
+        self.wordCount -= 1
+
+    def __findLastNodeOf(self, word):
+        """
+        Finds last node of word if defined in trie
+        """
+
         currentNode = self.root
         for character in word.lower():
             if character in currentNode.children:
@@ -85,14 +154,25 @@ class Trie(object):
                 return None
         return currentNode
 
-    def findTerminalNodeOf(self, word):
-        lastNode = self.findLastNodeOf(word)
+    def __findTerminalNodeOf(self, word):
+        """
+        Finds terminal node of word if defined in trie
+
+        It uses the method `findLastNodeOf` as helper method
+        """
+
+        lastNode = self.__findLastNodeOf(word)
         if lastNode:
             if lastNode.isEnd:
                 return lastNode
         return None
 
-    def deleteNodesForWordEndingWith(self, terminalNode):
+    def __deleteNodesForWordEndingWith(self, terminalNode):
+        """
+        Deletes all nodes from a end node (for a word) upwards without breaking
+        the storage of other words in trie
+        """
+
         lastNode = terminalNode
         character = lastNode.value
         while lastNode.isLeaf():
@@ -102,21 +182,12 @@ class Trie(object):
             if lastNode.isEnd or lastNode.parentNode is None:
                 break
 
-    # Remove word from trie
-    def remove(self, word):
-        if len(word) == 0:
-            return
-        terminalNode = self.findTerminalNodeOf(word)
-        if not terminalNode:
-            return
-        if terminalNode.isLeaf():
-            self.deleteNodesForWordEndingWith(terminalNode)
-        else:
-            terminalNode.isEnd = False
-        self.wordCount -= 1
+    def __wordsInSubtrie(self, rootNode, partialWord):
+        """
+        Finds array of words in a subtrie given a rootNode and the partial
+        word preceeding it
+        """
 
-    # Finds array of words in a subtrie of a the trie
-    def wordsInSubtrie(self, rootNode, partialWord):
         subtrieWords = []
         previousLetters = partialWord
         if rootNode.value is not None:
@@ -124,6 +195,6 @@ class Trie(object):
         if rootNode.isEnd:
             subtrieWords.append(previousLetters)
         for childNode in rootNode.children.values():
-            childWords = self.wordsInSubtrie(childNode, previousLetters)
+            childWords = self.__wordsInSubtrie(childNode, previousLetters)
             subtrieWords.extend(childWords)
         return subtrieWords
