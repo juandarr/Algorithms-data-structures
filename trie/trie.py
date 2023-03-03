@@ -101,7 +101,7 @@ class Trie(object):
             A list of words stored in the trie
         """
 
-        return self.__wordsInSubtrie(self.root, "")
+        return self._wordsInSubtrie(self.root, "")
 
     def insert(self, word):
         """
@@ -153,16 +153,16 @@ class Trie(object):
 
         if len(word) == 0:
             return
-        terminalNode = self.__findTerminalNodeOf(word)
+        terminalNode = self._findTerminalNodeOf(word)
         if not terminalNode:
             return
         if terminalNode.isLeaf():
-            self.__deleteNodesForWordEndingWith(terminalNode)
+            self._deleteNodesForWordEndingWith(terminalNode)
         else:
             terminalNode.isEnd = False
         self.wordCount -= 1
 
-    def __findLastNodeOf(self, word):
+    def _findLastNodeOf(self, word):
         """
         Finds last node of word if defined in trie
 
@@ -181,7 +181,7 @@ class Trie(object):
                 return None
         return currentNode
 
-    def __findTerminalNodeOf(self, word):
+    def _findTerminalNodeOf(self, word):
         """
         Finds terminal node of word if defined in trie
 
@@ -194,13 +194,13 @@ class Trie(object):
             the entire word is not store in trie
         """
 
-        lastNode = self.__findLastNodeOf(word)
+        lastNode = self._findLastNodeOf(word)
         if lastNode:
             if lastNode.isEnd:
                 return lastNode
         return None
 
-    def __deleteNodesForWordEndingWith(self, terminalNode):
+    def _deleteNodesForWordEndingWith(self, terminalNode):
         """
         Deletes all nodes from a end node (for a word) upwards without breaking
         the storage of other words in trie
@@ -215,7 +215,7 @@ class Trie(object):
             if lastNode.isEnd or lastNode.parentNode is None:
                 break
 
-    def __wordsInSubtrie(self, rootNode, partialWord):
+    def _wordsInSubtrie(self, rootNode, partialWord):
         """
         Finds array of words in a subtrie given a rootNode and the partial
         word preceeding it
@@ -234,6 +234,6 @@ class Trie(object):
         if rootNode.isEnd:
             subtrieWords.append(previousLetters)
         for childNode in rootNode.children.values():
-            childWords = self.__wordsInSubtrie(childNode, previousLetters)
+            childWords = self._wordsInSubtrie(childNode, previousLetters)
             subtrieWords.extend(childWords)
         return subtrieWords
