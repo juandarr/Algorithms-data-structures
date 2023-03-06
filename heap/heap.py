@@ -1,4 +1,5 @@
 from math import floor
+from typing import Optional
 
 
 class Heap(object):
@@ -19,7 +20,7 @@ class Heap(object):
     def right(index: int) -> int:
         return 2 * index + 2
 
-    def show_ancestry(self) -> None:
+    def show_table(self) -> None:
         print("Node  Parent  Left  Right")
         for idx, i in enumerate(self.ar):
             n, p, l, r = (len(self.ar), self.parent(idx), self.left(idx),
@@ -44,6 +45,22 @@ class Heap(object):
         else:
             return idx
 
+    def bubble_down(self, idx: int) -> int:
+        idx_l = self.left(idx)
+        idx_r = self.right(idx)
+        tmp_idx = idx
+        n = len(self.ar)
+        if idx_l < n and self.ar[idx_l] < self.ar[tmp_idx]:
+            tmp_idx = idx_l
+        if idx_r < n and self.ar[idx_r] < self.ar[tmp_idx]:
+            tmp_idx = idx_r
+        if tmp_idx != idx:
+            tmp = self.ar[idx]
+            self.ar[idx] = self.ar[tmp_idx]
+            self.ar[tmp_idx] = tmp
+            return tmp_idx
+        return idx
+
     def insert(self, value: int) -> None:
         self.ar.append(value)
         idx = len(self.ar)-1
@@ -51,9 +68,24 @@ class Heap(object):
         while (old_idx != idx and idx > 0):
             old_idx = idx
             idx = self.bubble_up(idx)
-            print('change', self.ar, idx)
+
+    def remove(self) -> Optional[int]:
+        if len(self.ar) == 0:
+            return None
+        last = self.ar.pop()
+        if len(self.ar) == 0:
+            return last
+        first = self.ar[0]
+        self.ar[0] = last
+        idx = 0
+        n = len(self.ar)
+        old_idx = n-1
+        while (idx != old_idx and idx < floor(n / 2)):
+            old_idx = idx
+            idx = self.bubble_down(idx)
+        return first
 
 
 ar = [10, 7, 3, 5, 1, 2, 8, 4]
 h = Heap(ar)
-h.show_ancestry()
+h.show_table()
