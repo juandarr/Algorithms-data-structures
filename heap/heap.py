@@ -3,21 +3,15 @@ from typing import Optional
 
 
 class Heap(object):
-    # def __init__(self, ar):
-    #     self.ar = []
-    #     for i in ar:
-    #         self.insert(i)
     def __init__(self, ar):
         self.ar = ar
         n = len(ar)
         for i in range(floor(len(ar)/2)-1, -1, -1):
             idx = i
             old_idx = n-1
-            print(self.ar, '-')
             while idx != old_idx and idx < floor(n/2):
                 old_idx = idx
                 idx = self.bubble_down(idx)
-                print(self.ar)
 
     @staticmethod
     def parent(index: int) -> int:
@@ -36,6 +30,9 @@ class Heap(object):
 
     def peek(self):
         return self.ar[0]
+
+    def index(self, value: int) -> int:
+        return self.ar.index(value)
 
     def show_table(self) -> None:
         print("Node  Parent  Left  Right")
@@ -107,13 +104,12 @@ class Heap(object):
                 idx = self.bubble_down(idx)
         return value_at_index
 
-    def index(self, value: int) -> int:
-        return self.ar.index(value)
+    def replace(self, index: int, value: int):
+        self.remove(index)
+        self.insert(value)
 
     # Next steps:
     # TODO Add comments and improve code
 
 
-ar = [10, 7, 3, 5, 1, 2, 8, 4]
-h = Heap(ar)
-h.show_table()
+# ar = [10, 7, 3, 5, 1, 2, 8, 4]
