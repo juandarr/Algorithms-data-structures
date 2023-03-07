@@ -20,6 +20,9 @@ class Heap(object):
     def right(index: int) -> int:
         return 2 * index + 2
 
+    def is_empty(self):
+        return len(self.ar) == 0
+
     def show_table(self) -> None:
         print("Node  Parent  Left  Right")
         for idx, i in enumerate(self.ar):
