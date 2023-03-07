@@ -69,21 +69,31 @@ class Heap(object):
             old_idx = idx
             idx = self.bubble_up(idx)
 
-    def remove(self) -> Optional[int]:
+    def remove(self, index: int = 0) -> Optional[int]:
         if len(self.ar) == 0:
             return None
+
         last = self.ar.pop()
         if len(self.ar) == 0:
             return last
-        first = self.ar[0]
-        self.ar[0] = last
-        idx = 0
+        value_at_index = self.ar[index]
+        self.ar[index] = last
+        idx = index
         n = len(self.ar)
         old_idx = n-1
         while (idx != old_idx and idx < floor(n / 2)):
             old_idx = idx
-            idx = self.bubble_down(idx)
-        return first
+            p_idx = self.parent(idx)
+            if p_idx >= 0 and self.ar[p_idx] > self.ar[idx]:
+                idx = self.bubble_up(idx)
+            else:
+                idx = self.bubble_down(idx)
+        return value_at_index
+
+    # Next steps:
+    # TODO Add remove at any index, search, replace and look for better
+    # implementations of heapify, see how to implement heap sort
+    # TODO Add comments and improve code
 
 
 ar = [10, 7, 3, 5, 1, 2, 8, 4]
