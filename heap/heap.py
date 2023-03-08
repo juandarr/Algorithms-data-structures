@@ -1,10 +1,15 @@
 from math import floor
 from typing import Optional
+import operator
 
 
 class Heap(object):
-    def __init__(self, ar):
+    def __init__(self, order_criteria: str, ar: list[int]):
         self.ar = ar
+        if order_criteria == '>':
+            self.comp = operator.gt
+        elif order_criteria == '<':
+            self.comp = operator.lt
         n = len(ar)
         for i in range(floor(len(ar)/2)-1, -1, -1):
             idx = i
@@ -51,7 +56,7 @@ class Heap(object):
 
     def bubble_up(self, idx: int) -> int:
         idx_p = self.parent(idx)
-        if self.ar[idx_p] > self.ar[idx]:
+        if self.comp(self.ar[idx], self.ar[idx_p]):
             tmp = self.ar[idx_p]
             self.ar[idx_p] = self.ar[idx]
             self.ar[idx] = tmp
@@ -64,9 +69,9 @@ class Heap(object):
         idx_r = self.right(idx)
         tmp_idx = idx
         n = len(self.ar)
-        if idx_l < n and self.ar[idx_l] < self.ar[tmp_idx]:
+        if idx_l < n and self.comp(self.ar[idx_l], self.ar[tmp_idx]):
             tmp_idx = idx_l
-        if idx_r < n and self.ar[idx_r] < self.ar[tmp_idx]:
+        if idx_r < n and self.comp(self.ar[idx_r], self.ar[tmp_idx]):
             tmp_idx = idx_r
         if tmp_idx != idx:
             tmp = self.ar[idx]
@@ -98,7 +103,7 @@ class Heap(object):
         while (idx != old_idx and idx < floor(n / 2)):
             old_idx = idx
             p_idx = self.parent(idx)
-            if p_idx >= 0 and self.ar[p_idx] > self.ar[idx]:
+            if p_idx >= 0 and self.comp(self.ar[idx], self.ar[p_idx]):
                 idx = self.bubble_up(idx)
             else:
                 idx = self.bubble_down(idx)
