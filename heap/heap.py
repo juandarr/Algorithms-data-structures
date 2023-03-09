@@ -72,13 +72,13 @@ class Heap(object):
         return left > right
 
     @staticmethod
-    def _parent(index: int) -> int:
+    def _parent(idx: int) -> int:
         """
         Finds the parent node index of a given child node index
 
         Parameters
         ----------
-        index: int
+        idx: int
             Index of child node
 
         Returns
@@ -86,16 +86,16 @@ class Heap(object):
         int
             Index of parent node index
         """
-        return floor((index-1)/2)
+        return floor((idx-1)/2)
 
     @staticmethod
-    def _left(index: int) -> int:
+    def _left(idx: int) -> int:
         """
         Finds the left child node index of a given parent node index
 
         Parameters
         ----------
-        index: int
+        idx: int
             Index of parent node
 
         Returns
@@ -103,16 +103,16 @@ class Heap(object):
         int
             Index of left child node index
         """
-        return 2 * index + 1
+        return 2 * idx + 1
 
     @staticmethod
-    def _right(index: int) -> int:
+    def _right(idx: int) -> int:
         """
         Finds the right child node index of a given parent node index
 
         Parameters
         ----------
-        index: int
+        idx: int
             Index of parent node
 
         Returns
@@ -120,7 +120,7 @@ class Heap(object):
         int
             Index of right child node index
         """
-        return 2 * index + 2
+        return 2 * idx + 2
 
     def _check_item(self, item: real | tuple[real, ...]) \
             -> real:
@@ -173,47 +173,47 @@ class Heap(object):
         else:
             return self.nodes[0]
 
-    def get_key(self, index: int) -> int | float:
+    def get_key(self, idx: int) -> int | float:
         """
         Gets key at `index` node
 
         Parameters
         ----------
-        index : int
+        idx : int
             index of the node to retrieve the key from
 
         Returns
         -------
         int
-            Returns key of node at `index`.
+            Returns key of node at `idx`.
         """
-        if index < 0 or index >= len(self.nodes):
+        if idx < 0 or idx >= len(self.nodes):
             raise RuntimeError('Index is out of bounds for heap size')
         try:
-            key = self._check_item(self.nodes[index])
+            key = self._check_item(self.nodes[idx])
             return key
         except Exception as e:
             print(e)
-            raise RuntimeError("The item couldn't be retrieved")
+            raise RuntimeError("The key couldn't be retrieved")
 
-    def index(self, value: real) -> Optional[int]:
+    def index(self, key_value: real) -> Optional[int]:
         """
-        Gets index of node with key `value`
+        Gets index of node with key `key_value`
 
         Parameters
         ----------
-        value: real
+        key_value: real
             Key of node element to find in heap
 
         Returns
         -------
         int, None
-            Index of node element with key `value`, or None if no value
+            Index of node element with key `key`, or None if no value
             is found
         """
         for idx, i in enumerate(self.nodes):
             key = self._check_item(i)
-            if key == value:
+            if key == key_value:
                 return idx
         return None
 
@@ -265,51 +265,54 @@ class Heap(object):
             Index of node to bubble down towards the leaves
         """
         n = len(self.nodes)
-        old_idx = n-1
-        while (idx != old_idx and idx < floor(n/2)):
-            old_idx = idx
-            idx_l = self._left(idx)
-            idx_r = self._right(idx)
-            tmp_idx = idx
-            if idx_l < n and self._comp(self.get_key(idx_l),
-                                        self.get_key(tmp_idx)):
-                tmp_idx = idx_l
-            if idx_r < n and self._comp(self.get_key(idx_r),
-                                        self.get_key(tmp_idx)):
-                tmp_idx = idx_r
-            if tmp_idx != idx:
-                tmp = self.nodes[idx]
-                self.nodes[idx] = self.nodes[tmp_idx]
-                self.nodes[tmp_idx] = tmp
-                idx = tmp_idx
+        idx_l = self._left(idx)
+        idx_r = self._right(idx)
+        tmp_idx = idx
+        if idx_l < n and self._comp(self.get_key(idx_l),
+                                    self.get_key(tmp_idx)):
+            tmp_idx = idx_l
+        if idx_r < n and self._comp(self.get_key(idx_r),
+                                    self.get_key(tmp_idx)):
+            tmp_idx = idx_r
+        if tmp_idx == idx:
+            return None
+        else:
+            tmp = self.nodes[idx]
+            self.nodes[idx] = self.nodes[tmp_idx]
+            self.nodes[tmp_idx] = tmp
+            self.bubble_down(tmp_idx)
 
-    def insert(self, value: real | tuple[real, ...]) -> None:
+    def insert(self, node: real | tuple[real, ...]) -> None:
         """
         Inserts node in heap while maintaining the heap rule intact
 
         Parameters
         ----------
-        value : real, tuple[real, ...]
+        node : real, tuple[real, ...]
             Value to be inserted in the heap. It needs to be of the same
             type of values already contained in the heap
         """
-        if self.is_empty() or isinstance(value, self.real if
-                                         isinstance(self.nodes[0], self.real)
-                                         else tuple):
-            self.nodes.append(value)
+        if self.is_empty() or isinstance(
+                node, self.real if isinstance(self.nodes[0], self.real)
+                else tuple):
+            if isinstance(node, tuple):
+                if not isinstance(node[0], self.real):
+                    raise RuntimeError("First item of tuple is not a real \
+value")
+            self.nodes.append(node)
             idx = len(self.nodes)-1
             self.bubble_up(idx)
         else:
             raise RuntimeError('Item must be of the same type of nodes in \
 the heap')
 
-    def remove(self, index: int = 0) -> Optional[real | tuple[real, ...]]:
+    def remove(self, idx: int = 0) -> Optional[real | tuple[real, ...]]:
         """
         Removes node at `index` from the heap
 
         Parameters
         ----------
-        index : int
+        idx : int
             index of node to be removed from the heap
 
         Returns
@@ -318,36 +321,49 @@ the heap')
             Return the item removed at `index`, be a real number or a tuple
             where the first value is a real number
         """
-        if len(self.nodes) == 0:
+        n = len(self.nodes)
+        if idx >= n:
+            raise RuntimeError("Index out of boundaries")
+        if n == 0:
             return None
 
         item = self.nodes.pop()
-        if len(self.nodes) == 0 or index == len(self.nodes):
+        if n-1 == 0 or idx == n-1:
             return item
-        item_at_index = self.nodes[index]
-        self.nodes[index] = item
+        item_at_index = self.nodes[idx]
+        self.nodes[idx] = item
 
-        p_idx = self._parent(index)
-        if p_idx >= 0 and self._comp(self.get_key(index),
+        p_idx = self._parent(idx)
+        if p_idx >= 0 and self._comp(self.get_key(idx),
                                      self.get_key(p_idx)):
-            self.bubble_up(index)
+            self.bubble_up(idx)
         else:
-            self.bubble_down(index)
+            self.bubble_down(idx)
         return item_at_index
 
-    def replace(self, index: int, item: real | tuple[real, ...]):
+    def replace(self, idx: int, node: real | tuple[real, ...]):
         """
-        Replaces node at `index` with item `item`
+        Replaces node at `index` with node `node`
 
         Parameters
         ----------
-        index : int
+        idx : int
             Index of node element to be replaced
-        item : real, tuple[real, ...]
-            Item to replace with the node at `index`
+        node : real, tuple[real, ...]
+            Node to replace with the node at `index`
         """
-        self.remove(index)
-        self.insert(item)
-
-
+        if len(self.nodes) > 0:
+            if isinstance(node, self.real if isinstance(self.nodes[0],
+                                                        self.real) else tuple):
+                if isinstance(node, tuple):
+                    if not isinstance(node[0], self.real):
+                        raise RuntimeError("First item of tuple is not a real \
+                                value")
+                self.remove(idx)
+                self.insert(node)
+            else:
+                raise RuntimeError("Type of node to insert in heap doesn't \
+match type of nodes in heap")
+        else:
+            raise RuntimeError("There are no elements to replace")
 # ar = [10, 7, 3, 5, 1, 2, 8, 4]
