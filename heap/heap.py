@@ -1,15 +1,14 @@
 from math import floor
 from typing import Optional
-import operator
 
 
 class Heap(object):
     def __init__(self, order_criteria: str, ar: list[int]):
         self.ar = ar
         if order_criteria == '>':
-            self.comp = operator.gt
+            self.comp = self.greater_than
         elif order_criteria == '<':
-            self.comp = operator.lt
+            self.comp = self.less_than
         n = len(ar)
         for i in range(floor(len(ar)/2)-1, -1, -1):
             idx = i
@@ -17,6 +16,14 @@ class Heap(object):
             while idx != old_idx and idx < floor(n/2):
                 old_idx = idx
                 idx = self.bubble_down(idx)
+
+    @staticmethod
+    def less_than(left: int, right: int) -> bool:
+        return left < right
+
+    @staticmethod
+    def greater_than(left: int, right: int) -> bool:
+        return left > right
 
     @staticmethod
     def parent(index: int) -> int:
@@ -114,7 +121,7 @@ class Heap(object):
         self.insert(value)
 
     # Next steps:
-    # TODO Add comments and improve code
+    # TODO Add comments and improve code (simplify bubble up and bubble down)
 
 
 # ar = [10, 7, 3, 5, 1, 2, 8, 4]
