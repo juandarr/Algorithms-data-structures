@@ -122,14 +122,14 @@ class Heap(object):
         """
         return 2 * idx + 2
 
-    def _check_item(self, item: real | tuple[real, ...]) \
+    def _check_item(self, node: real | tuple[real, ...]) \
             -> real:
         """
-        Checks that `item` is of instance integer or tuple[int, ...]
+        Checks that `node` is of instance integer or tuple[int, ...]
 
         Parameters
         ----------
-        item : int, tuple[int, ...]
+        node : int, tuple[int, ...]
             Element of heap
 
         Returns
@@ -137,16 +137,15 @@ class Heap(object):
         int, None
             Key value of node or None if value can't be retrieved
         """
-        if isinstance(item, self.real):
-            return item
-        elif isinstance(item, tuple):
-            if isinstance(item[0], self.real):
-                return item[0]
+        if isinstance(node, self.real):
+            return node
+        elif isinstance(node, tuple):
+            if isinstance(node[0], self.real):
+                return node[0]
             else:
                 raise RuntimeError("First element of tuple must be an integer")
         else:
-            raise RuntimeError("Node element must be an integer or tuple \
-                    starting with a number")
+            raise RuntimeError("Node element must be an integer or tuple")
 
     def is_empty(self) -> bool:
         """
@@ -189,12 +188,8 @@ class Heap(object):
         """
         if idx < 0 or idx >= len(self.nodes):
             raise RuntimeError('Index is out of bounds for heap size')
-        try:
-            key = self._check_item(self.nodes[idx])
-            return key
-        except Exception as e:
-            print(e)
-            raise RuntimeError("The key couldn't be retrieved")
+        key = self._check_item(self.nodes[idx])
+        return key
 
     def index(self, key_value: real) -> Optional[int]:
         """
@@ -298,7 +293,7 @@ class Heap(object):
             if isinstance(node, tuple):
                 if not isinstance(node[0], self.real):
                     raise RuntimeError("First item of tuple is not a real \
-value")
+                            value")
             self.nodes.append(node)
             idx = len(self.nodes)-1
             self.bubble_up(idx)
@@ -363,7 +358,6 @@ the heap')
                 self.insert(node)
             else:
                 raise RuntimeError("Type of node to insert in heap doesn't \
-match type of nodes in heap")
+                        match type of nodes in heap")
         else:
             raise RuntimeError("There are no elements to replace")
-# ar = [10, 7, 3, 5, 1, 2, 8, 4]
