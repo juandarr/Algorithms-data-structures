@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const CHART_COLORS = {
+            red: 'rgb(255, 99, 132)',
+            orange: 'rgb(255, 159, 64)',
+            yellow: 'rgb(255, 205, 86)',
+            green: 'rgb(75, 192, 192)',
+            blue: 'rgb(54, 162, 235)',
+            purple: 'rgb(153, 102, 255)',
+            grey: 'rgb(201, 203, 207)'
+        };
+        const factorial = function (n) {
+            if (n < 2) {
+                return 1
+            } else {
+                return n * factorial(n - 1)
+            }
+        }
+        const DATA_COUNT = 11;
+        const labels = [];
+        for (let i = 0; i < DATA_COUNT; ++i) {
+            labels.push(i.toString());
+        }
+
+        const generateDatapoints = function (f, labels) {
+            tmp = [];
+            console.log(f)
+            for (let x in labels) {
+                tmp.push(f(x))
+            }
+            return tmp;
+        }
+
+        const datapoints = []
+        const functions = { 'linear': (x) => x, 'quadratic': (x) => x * x, 'cubic': (x) => x * x * x, 'logarithmic': (x) => Math.log2(x), 'exponential': (x) => Math.exp(x), 'n*log(n)': (x) => x * Math.log2(x), 'factorial': (x) => factorial(x) }
+
+        for (let f in functions) {
+            datapoints.push(generateDatapoints(functions[f], labels))
+        }
+
+        const data = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Linear',
+                    data: datapoints[0],
+                    borderColor: CHART_COLORS.blue,
+                    fill: false,
+                    tension: 0.4
+                },
+                {
+                    label: 'Quadratic',
+                    data: datapoints[1],
+                    borderColor: CHART_COLORS.red,
+                    fill: false,
+                    tension: 0.4
+                },
+                {
+                    label: 'Cubic',
+                    data: datapoints[2],
+                    borderColor: CHART_COLORS.yellow,
+                    fill: false,
+                    tension: 0.4
+                }, {
+                    label: 'Logarithmic',
+                    data: datapoints[3],
+                    borderColor: CHART_COLORS.purple,
+                    fill: false,
+                    tension: 0.4
+                }, {
+                    label: 'Exponential',
+                    data: datapoints[4],
+                    borderColor: CHART_COLORS.orange,
+                    fill: false,
+                    tension: 0.4
+                }, {
+                    label: 'n*log(n)',
+                    data: datapoints[5],
+                    borderColor: CHART_COLORS.green,
+                    fill: false,
+                    tension: 0.4
+                }, {
+
+                    label: 'Factorial',
+                    data: datapoints[6],
+                    borderColor: CHART_COLORS.grey,
+                    fill: false,
+                    tension: 0.4
+                }
+
+
+            ]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Functions to compare'
+                    },
+                },
+                interaction: {
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'x'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'y'
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 20
+                    }
+                }
+            },
+        };
+
+        const ctx = document.getElementById('myChart');
+        new Chart(ctx, config);
+    </script>
+
+</body>
+
+</html>
