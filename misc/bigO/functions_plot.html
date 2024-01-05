@@ -49,65 +49,30 @@
             return tmp;
         }
 
-        const datapoints = []
-        const functions = { 'linear': (x) => x, 'quadratic': (x) => x * x, 'cubic': (x) => x * x * x, 'logarithmic': (x) => Math.log2(x), 'exponential': (x) => Math.exp(x), 'n*log(n)': (x) => x * Math.log2(x), 'factorial': (x) => factorial(x) }
+        const functions = { 'Linear': (x) => x, 'Quadratic': (x) => x * x, 'Cubic': (x) => x * x * x, 'Logarithmic': (x) => Math.log2(x), 'Exponential': (x) => Math.exp(x), 'n*log(n)': (x) => x * Math.log2(x), 'Factorial': (x) => factorial(x) }
+
+        const colors = { 'Linear': CHART_COLORS.blue, 'Quadratic': CHART_COLORS.red, 'Cubic': CHART_COLORS.yellow, 'Logarithmic': CHART_COLORS.purple, 'Exponential': CHART_COLORS.orange, 'n*log(n)': CHART_COLORS.green, 'Factorial': CHART_COLORS.gray }
+
+        const datasets = []
 
         for (let f in functions) {
-            datapoints.push(generateDatapoints(functions[f], labels))
-        }
-
-        const data = {
-            labels: labels,
-            datasets: [
+            const datapoints = generateDatapoints(functions[f], labels)
+            datasets.push(
                 {
-                    label: 'Linear',
-                    data: datapoints[0],
-                    borderColor: CHART_COLORS.blue,
-                    fill: false,
-                    tension: 0.4
-                },
-                {
-                    label: 'Quadratic',
-                    data: datapoints[1],
-                    borderColor: CHART_COLORS.red,
-                    fill: false,
-                    tension: 0.4
-                },
-                {
-                    label: 'Cubic',
-                    data: datapoints[2],
-                    borderColor: CHART_COLORS.yellow,
-                    fill: false,
-                    tension: 0.4
-                }, {
-                    label: 'Logarithmic',
-                    data: datapoints[3],
-                    borderColor: CHART_COLORS.purple,
-                    fill: false,
-                    tension: 0.4
-                }, {
-                    label: 'Exponential',
-                    data: datapoints[4],
-                    borderColor: CHART_COLORS.orange,
-                    fill: false,
-                    tension: 0.4
-                }, {
-                    label: 'n*log(n)',
-                    data: datapoints[5],
-                    borderColor: CHART_COLORS.green,
-                    fill: false,
-                    tension: 0.4
-                }, {
-
-                    label: 'Factorial',
-                    data: datapoints[6],
-                    borderColor: CHART_COLORS.grey,
+                    label: f,
+                    data: datapoints,
+                    borderColor: colors[f],
                     fill: false,
                     tension: 0.4
                 }
 
 
-            ]
+            )
+        }
+
+        const data = {
+            labels: labels,
+            datasets: datasets
         };
 
         const config = {
