@@ -14,6 +14,9 @@ def substrCount(n, s):
             if len(sub) == 1:
                 counter += 1
             elif len(sub) == 2:
+                d = list(sub.keys())
+                if sub[d[0]] > 1 and sub[d[1]] > 1:
+                    break
                 if k % 2 == 1:
                     tmpChar = t[k // 2]
                     if tmpChar in sub:
