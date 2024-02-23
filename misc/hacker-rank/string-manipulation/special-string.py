@@ -1,8 +1,10 @@
 def substrCount(n, s):
     counter = 0
     for i in range(n):
-        for j in range(i, n):
-            sub = s[i : j + 1]
+        sub = s[i]
+        counter += 1
+        for j in range(i + 1, n):
+            sub += s[j]
             print(sub)
             tmp = set(sub)
             if len(tmp) == 1:
@@ -25,4 +27,4 @@ def substrCount(n, s):
 
 
 st = "mnonopoo"
-substrCount(len(st), st)
+print(substrCount(len(st), st))
