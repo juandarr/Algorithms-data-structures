@@ -18,6 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
+        //Created with Chart.js:https://www.chartjs.org/docs/latest/ 
         const CHART_COLORS = {
             red: 'rgb(255, 99, 132)',
             orange: 'rgb(255, 159, 64)',
@@ -63,7 +64,10 @@
                     data: datapoints,
                     borderColor: colors[f],
                     fill: false,
-                    tension: 0.4
+                    tension: 0.4,
+                    pointStyle: 'rectRounded',
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
                 }
 
 
