@@ -1,10 +1,20 @@
 # Algorithms and data structures
 
-This repository shows the exploration of algorithms and data structures in different programming languages. My goal is to create a summary of major findings and implementations. Some of the implementations here are a re-exploration of topics and already know about, but will include new lessons learned about best practices and programming techniques. 
+In this repository I explore algorithms and data structures in different programming languages. My goal is to create a summary of major findings and implementations. Some of the implementations here are a re-exploration of topics and already known about in the past, but will include new lessons learned about best practices and programming techniques. 
 
 
 ## Sorting algorithms
 
+### Bubble sort
+
+### Insertion sort 
+
+### Mergesort
+
+### Quicksort
+
+### More
+[Here](https://www.toptal.com/developers/sorting-algorithms) is a visualization of different sorting algorithms with its speed in different conditions. 
 ## Graphs
 
 Graphs are data structures defined by nodes (also called vertices) and edges. Edges connect two nodes
