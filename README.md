@@ -62,6 +62,11 @@ be easily represented by an array.
 
 ## Misc
 
+### HackerRank
+I am solving problems from HackerRank. Right now mostly focused on the interview ooriented challenges. Will be documenting more aspects of the these challenges in the future.
+
 ### Hangman
 
 ### Card deck 
+
+
