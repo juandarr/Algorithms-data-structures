@@ -301,9 +301,9 @@ class Heap(object):
             raise RuntimeError('Item must be of the same type of nodes in \
 the heap')
 
-    def remove(self, idx: int = 0) -> Optional[real | tuple[real, ...]]:
+    def pop(self, idx: int = 0) -> Optional[real | tuple[real, ...]]:
         """
-        Removes node at `index` from the heap
+        Pops (Removes) node at `index` from the heap and returns its value
 
         Parameters
         ----------
