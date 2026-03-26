@@ -1,10 +1,9 @@
-from math import floor
-from typing import Optional
-
+from typing import Optional, Generic, TypeVar, Any
 
 real = int | float  # Allowed data type of keys in heap
+T = TypeVar('T', bound=real | tuple[real, *tuple[Any, ...]]) # Heaps store real values or tuples where real value is first element
 
-class Heap(object):
+class Heap(Generic[T]):
     """
     Heap class
 
@@ -12,7 +11,7 @@ class Heap(object):
     """
 
     def __init__(self, order_criteria: str,
-                 nodes: list[real | tuple[real, ...]]):
+                 nodes: list[T]):
         """
         Constructor method
 
@@ -124,8 +123,7 @@ class Heap(object):
         return 2 * idx + 2
 
     @staticmethod
-    def _check_retrieve_key(node: real | tuple[real, ...]) \
-            -> real:
+    def _check_retrieve_key(node: T) -> real:
         """
         Checks that `node` is of instance real or tuple[real, ...] and returns the real key
 
@@ -225,7 +223,7 @@ class Heap(object):
             self.nodes[idx_child] = tmp
             self._bubble_down(idx_child)
 
-    def peek(self) -> Optional[real | tuple[real, ...]]:
+    def peek(self) -> Optional[T]:
         """
         Peek the heap to find value at the root
 
@@ -239,7 +237,7 @@ class Heap(object):
         else:
             return self.nodes[0]
 
-    def insert(self, node: real | tuple[real, ...]) -> None:
+    def insert(self, node: T) -> None:
         """
         Inserts node in heap while maintaining the heap rule intact
 
@@ -261,7 +259,7 @@ class Heap(object):
         else:
             raise ValueError(f'New item must be of the same type of nodes in the heap: {type(self.nodes[0])}')
 
-    def pop(self) -> Optional[real | tuple[real, ...]]:
+    def pop(self) -> Optional[T]:
         """
         Pops min or max node from the heap and returns its value
 
@@ -286,3 +284,6 @@ class Heap(object):
         self.nodes[0] = item
         self._bubble_down(0)
         return min_max_item
+
+if __name__=="__main__":
+    pass

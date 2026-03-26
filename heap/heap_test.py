@@ -1,5 +1,5 @@
 import unittest
-from heap import Heap
+from .heap import Heap 
 
 class TestHeap(unittest.TestCase):
 
@@ -47,11 +47,11 @@ class TestHeap(unittest.TestCase):
     def test_insert_type_validation(self):
         h = Heap(order_criteria='min', nodes=[1.0, 2.0])
         with self.assertRaises(ValueError):
-            h.insert((3.0, "Invalid because base is float, not tuple"))
+            h.insert((3.0, "Invalid because base is float, not tuple")) # type: ignore
             
         h_tuple = Heap(order_criteria='min', nodes=[(1, 'A')])
         with self.assertRaises(ValueError):
-            h_tuple.insert(('String', 'Invalid first element'))
+            h_tuple.insert(('String', 'Invalid first element')) # type: ignore
 
     # --- 4. Pop Tests ---
 
