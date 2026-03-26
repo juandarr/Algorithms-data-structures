@@ -1,5 +1,5 @@
 import unittest
-from heap import Heap 
+from heap import Heap
 
 class TestHeap(unittest.TestCase):
 
