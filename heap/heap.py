@@ -1,7 +1,8 @@
-from typing import Optional, Generic, TypeVar, Any
+from typing import Generic, TypeVar, Any
 
 real = int | float  # Allowed data type of keys in heap
-T = TypeVar('T', bound=real | tuple[real, *tuple[Any, ...]]) # Heaps store real values or tuples where real value is first element
+# Type definition valid for Python 3.11 or newer
+T = TypeVar('T', bound=real | tuple[real, *tuple[Any, ...]]) # Heaps store real values or tuples where a real value is first element
 
 class Heap(Generic[T]):
     """
@@ -223,7 +224,7 @@ class Heap(Generic[T]):
             self.nodes[idx_child] = tmp
             self._bubble_down(idx_child)
 
-    def peek(self) -> Optional[T]:
+    def peek(self) -> T | None:
         """
         Peek the heap to find value at the root
 
@@ -259,7 +260,7 @@ class Heap(Generic[T]):
         else:
             raise ValueError(f'New item must be of the same type of nodes in the heap: {type(self.nodes[0])}')
 
-    def pop(self) -> Optional[T]:
+    def pop(self) -> T | None:
         """
         Pops min or max node from the heap and returns its value
 
